@@ -20,10 +20,19 @@ class Index extends Common
 
 
     public function store(){
-
+      //select flower cae=1 and type=1
+      $type = input('type');
+      $cate = input('cate');
+      $name = input('name');
+      $map = array();
+      $map['cate'] = $cate?$cate:1;
+      $map['type'] = $type ? $type:1;
+      if($name) $map['name'] = array('like',"%".$name."%");
+      $flower = Db::name('flower')->where($map)->order('id desc')->paginate(9);
+      $this->assign('flower',$flower);
     	return $this->fetch('shop');
     }
-	
+
 
     //注册,exit,josn_encode($param)
 	public function register(){
@@ -45,7 +54,7 @@ class Index extends Common
 			}else{
 				exit(json_encode(['code'=>0]));
 			}
-		
+
 	}
 
 
@@ -63,11 +72,11 @@ class Index extends Common
 			exit(json_encode(['code'=>0]));
 		}
 	}
-	
+
 
 	//设置状态
 	public function SetUserLogin($user){
-	
+
 		\think\Session::set('login_uid',$user[0]['id']);
 		\think\Session::set('login_nick',$user[0]['nickname']);
 	//	\redisObj\redisTool::getRedis()->lpush('loginuser',$user['id']);
@@ -95,7 +104,7 @@ class Index extends Common
 		$this->assign('webserver',\Think\Config::get('WEBSERVER')."/");
 		return $this->fetch('selectshow');
 	}
-	
+
 	//下单页
 	public function payment(){
 		//导航推荐,及在线影视推荐
@@ -115,7 +124,7 @@ class Index extends Common
 		}else{
 			$data = Request::instance()->post();
 			var_dump($data);
-		
+
 
 		}
 
@@ -171,7 +180,7 @@ class Index extends Common
 	public function movies(){
 		return $this->fetch('movies');
 	}
-	
+
 
 	//读博客
 	public function readblog(){
@@ -189,7 +198,7 @@ class Index extends Common
 		$latest = Db::query("select id,title from blog order by addtime desc limit 15");
 		$this->assign('latest',$latest);
 		return $this->fetch('single');
-	}	
+	}
 
 
 
@@ -212,7 +221,7 @@ class Index extends Common
 		$sql = sprintf("select o.id,o.orderid,o.addtime,o.status,v.title,c.name,o.time,o.money,t.btime,t.etime from film_order o join video v ON o.videoid=v.id join cinemas c ON o.cinemaid=c.id join tickets t ON o.ticketid=t.id where o.uid=%d",\think\Session::get('login_uid'));
 		$ticket = Db::query($sql);
 		return $this->fetch('myticket',['ticket'=>$ticket]);
-	} 
+	}
 
 
 	public function UpdateVideoView($id){
@@ -221,7 +230,7 @@ class Index extends Common
 			$sql = sprintf("update video set view='%d' where id='%d'",$old+1,$id);
 			Db::execute($sql);
 	}
-	      
+
 
     /**
      * video list
@@ -259,7 +268,7 @@ class Index extends Common
     public function playonline(){
     	//导航推荐,及在线影视推荐
     	$this->navdata();//每个函数都要用，所以封装一个新的函数，复用即可
-    	
+
 		$id = input('id');
 		$video = Db::name('video')->where(['id'=>$id])->find();
 			$this->assign('webserver',\Think\Config::get('WEBSERVER')."/"); $this->assign('video',$video);

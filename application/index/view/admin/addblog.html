@@ -3,26 +3,27 @@
   <link rel="stylesheet" href="{$Think.config.WEBSERVER}/public/com/jQuery-File-Upload-9.9.3/css/jquery.fileupload.css">
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">添加/编辑博客</h3><a href="{:url('admin/essaylist')}" class='btn btn-default btn-xs pull-right'>返回列表</a>
+      <h3 class="box-title">添加/编辑花卉</h3><a href="{:url('admin/flowerlist')}" class='btn btn-default btn-xs pull-right'>返回列表</a>
     </div><!-- /.box-header -->
     <div class="box-body">
          <form method="POST" id='form'>
             <input type="hidden" name="id" value="{$info.id}">
             <div class='form-group'>
-              <label>标题：</label>
-              <input type='text' name='title' class='form-control' value="{$info.title}">
+              <label>花卉名称：</label>
+              <input type='text' name='name' class='form-control' value="{$info.name}">
             </div>
+<input type="number" name="type" value="1">
+  <div classs="form-group">
+		<label>类型</label>
+		<select class="form-control" name="cate">
+			<option value='1'>室内花卉</option>
+			<option value='2'>室外花卉</option>
+		</select>
+	</div>
 
+<br>
             <div class='form-group'>
-              <label>描述：</label>
-          
-
-              <textarea name="description" class="form-control" rows="3"></textarea>
-            </div>
-
-
-            <div class='form-group'>
-              <label>封面图片：</label>
+              <label>花卉大图：</label>
                 <a href="javascript:$('#cover').val('');$('.showcover').html('');" onclick="return confirm('确定清除封面？');" class='pull-right'>清除封面</a> <br>
                   <button type='button' class='btn btn-success btn-sm fileinput-button'><i class="glyphicon glyphicon-picture"></i> <small>推荐尺寸 400*300 点击上传</small><input  id="uploadcover" type="file" name="files" accept="image/*" ></button>
                     <div id="progress" class="progress">
@@ -31,42 +32,47 @@
                     <div id="files" class="files">
                     </div>
                     <div class='showcover'>
+                      {if condition="$info.cover neq ''"}
                           <img src="{$Think.config.WEBSERVER}/{$info.cover}">
+                      {/if}
                     </div>
                 <input class='hide' name='cover' id='cover' value="{$info.cover}">
             </div>
-            <div class='form-group'>
-              <label>内容：</label>
-                <textarea id="editor_id" name="content" style="width:100%;min-height:260px;"></textarea>
-            </div>
-          
+
+
             <div class="form-group">
-                <label>精彩片段url</label>
-                <input type="url" name="frameurl" class="form-control" value="{$info.frameurl}">
+                <label>价格</label>
+                <input type="number" name="price" class="form-control" value="{$info.price}">
             </div>
 
-            
-            
+
+            <div class="form-group">
+                <label>level</label>
+                <input type="number" name="level" class="form-control" value="{$info.level}">
+            </div>
+
+            <div class="form-group">
+                <label>stock</label>
+                <input type="number" name="stock" class="form-control" value="{$info.stock}">
+            </div>
+
+
+
+
+
+
          </form>
     </div><!-- /.box-body -->
     <div class="box-footer clearfix">
       <button type="button" onclick="saveart();" class="btn btn-success pull-right saveart">确定</button>
-    </div>   
+    </div>
   </div>
-<div class="temp hide">{$info.content}</div>
-<script charset="utf-8" src="{$Think.config.WEBSERVER}/public/com/kindeditor/kindeditor.js"></script>
-<script charset="utf-8" src="{$Think.config.WEBSERVER}/public/com/kindeditor/lang/zh_CN.js"></script>
+
 <script type="text/javascript">
-KindEditor.ready(function(K) {
-    window.editor = K.create('#editor_id',{
-      uploadJson:"{:url('Common/upload')}"
-    });
-    editor.html($('.temp').html());
-});
+
 function saveart(){
-  $("#editor_id").val(editor.html());
-  if(vr('title') == ''){
-    alert('请填写标题!');
+  if(vr('name') == ''){
+    alert('请填写name!');
   }else{
     $(".saveart").addClass('disabled');
     $.post(location.href,$('#form').serialize(),function(data){

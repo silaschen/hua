@@ -9,11 +9,11 @@ return [
     // 用户名
     'username'        => 'root',
     // 密码
-    'password'        => 'root',
+    'password'        => 'chen1210',
     // 端口
     'hostport'        => '3306',
     // 连接dsn
-    'dsn'             => 'mysql:host=127.0.0.1;dbname=film',
+    'dsn'             => 'mysql:host=127.0.0.1;dbname=hua',
     // 数据库连接参数
     'params'          => [],
     // 数据库编码默认采用utf8

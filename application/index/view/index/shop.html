@@ -43,288 +43,65 @@
 
 							<div class="shop-grid">
 								<div class="row wow fadeInUp">
+
+									{foreach name="flower" item="vo"}
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 										<div class="product-box">
 											<div class="product-image">
 												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/12.jpg" alt="product">
+													<img src="{$Think.Config.WEBSERVER}/{$vo['cover']}" alt="product">
 												</a>
 											</div>
 											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Vax Pressure Washer</span></div>
-												<div class="product-desc">1800W Powerful Motor</div>
+												<div class="product-title"><span>{$vo['name']}</span></div>
+												<div class="product-desc">Sale off</div>
 												<div class="row-pr">
 													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
 														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
 													</div>
 													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$59</div>
+														<div class="price">${$vo['price']}</div>
 														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-															<span class="ef icon_star empty"></span>
+															{for start="0" end="$vo['level']" name='k'}
+
+																	<span class="ef icon_star"></span>
+
+
+															{/for}
+
+															{for start="0" end="5-$vo['level']" name='k'}
+
+																	<span class="ef icon_star empty"></span>
+
+
+															{/for}
+
+
+
+
+
 														</div>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="sale-product"><span>sale</span></div>
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Electric Rotary Lawn Mower</span></div>
-												<div class="product-desc">Qualcast 1400W - 34cm</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$165</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Cylinder Lawn Mower</span></div>
-												<div class="product-desc">Sovereign Push - 30cm</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$43</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
+
+									{/foreach}
+
+
+
+
 								</div>
 
-								<div class="row wow fadeInUp">
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Home Pressure Washer</span></div>
-												<div class="product-desc">Karcher Compact - 1400W</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$59</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Easimo Lawn Mower 900W</span></div>
-												<div class="product-desc">Flymo Electric 900W</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$59</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Electric Hover Lawn Mower</span></div>
-												<div class="product-desc">Qualcast 1600W - 350W Trimmer Set </div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$169</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 
-								<div class="row wow fadeInUp">
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Electric Knapsack Sprayer</span></div>
-												<div class="product-desc">The handy - 16L</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$559</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="sale-product"><span>sale</span></div>
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/13.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Cordless Grass Trimmer</span></div>
-												<div class="product-desc">Qualcast Li-ion - 18V</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price"><span class="before-price">$135</span>$105</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-										<div class="product-box">
-											<div class="product-image">
-												<a href="shop-2.html">
-													<img src="{$Think.Config.WEBSERVER}/public/hua/media/store/product-9.jpg" alt="product">
-												</a>
-											</div>
-											<div class="product-desc-wrapper">
-												<div class="product-title"><span>Hand Push Lawn Mower</span></div>
-												<div class="product-desc">Webb - Cylinder - H18</div>
-												<div class="row-pr">
-													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
-													</div>
-													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-														<div class="price">$169</div>
-														<div class="rating pull-right">
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star"></span>
-															<span class="ef icon_star empty"></span>
-															<span class="ef icon_star empty"></span>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
+
+
 							</div>
-
+{$flower->render()}
 							<div class="pagination-box">
-								<ul>
-									<!--<li class="arrow-pagin">
-									<a href="#">
-									<span class="ef arrow_left"></span>
-									</a>
-									</li>-->
-									<li class="active">
-										<span class="number-pag">1</span>
-									</li>
-									<li>
-										<a href="#">
-											<span class="number-pag">2</span>
-										</a>
-									</li>
-									<li>
-										<a href="#">
-											<span class="number-pag">3</span>
-										</a>
-									</li>
-									<li class="arrow-pagin">
-										<a href="#">
-											<span class="ef arrow_right"></span>
-										</a>
-									</li>
-								</ul>
+
+
 							</div>
 
 						</div>
@@ -343,8 +120,8 @@
 										</h3>
 										<div>
 											<ul>
-												<li class="active"><a href="#">Lawn Movers</a></li>
-												<li><a href="#">Hedge Cutters</a></li>
+												<li class="active"><a href="{:url('index/index/store',array('cate'=>1,'name'=>'君子兰'))}">jun</a></li>
+												<li><a href="{:url('index/index/store',array('cate'=>1,'name'=>'小天鹅'))}">Hedge Cutters</a></li>
 												<li><a href="#">Cultivators</a></li>
 												<li><a href="#">Ride-On Movers</a></li>
 												<li><a href="#">Water Pumps</a></li>
@@ -371,14 +148,14 @@
 										</h3>
 										<div>
 											<ul>
-												<li class="active"><a href="#">蔬菜瓜果</a></li>
-												<li><a href="#">Hedge Cutters</a></li>
+												<li class="active"><a href="{:url('index/index/store',array('type'=>2,'cate'=>1))}">蔬菜瓜果</a></li>
+												<li><a href="{:url('index/index/store',array('type'=>2,'cate'=>2))}">Hedge Cutters</a></li>
 												<li><a href="#">Cultivators</a></li>
 												<li><a href="#">Ride-On Movers</a></li>
 												<li><a href="#">Water Pumps</a></li>
 											</ul>
 										</div>
-										
+
 										<h3>
 											<span class="fi flaticon-plants5"></span>
 											<span class="title-accordion-menu-item">精选品种</span>

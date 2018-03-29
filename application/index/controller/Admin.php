@@ -1,4 +1,4 @@
-<?php 
+<?php
 namespace app\index\controller;
 use app\index\controller\Common;
 use think\Request;
@@ -40,7 +40,7 @@ class Admin extends Common
 			}
 		}
 	}
-	
+
 	public function userlist(){
 
 			$p = input('p')?input('p'):1;
@@ -65,11 +65,11 @@ class Admin extends Common
 
 
 	}
-	
+
 
 	public function addslide(){
 		if(\think\Request::instance()->isGet()){
-				
+
 		return $this->fetch('addslide',['eq'=>1,'title'=>'slide']);
 
 
@@ -78,7 +78,7 @@ class Admin extends Common
 			$flag = Db::name('slides')->insert(['cover'=>$cover]);
 			exit(json_encode(['code'=>1]));
 		}
-	
+
 
 	}
 
@@ -86,8 +86,8 @@ class Admin extends Common
 	public function addcinema(){
 
 		if(Request::instance()->isGet()){
-			
-			return $this->fetch('addcinema',['eq'=>1,'title'=>'addcinema']);			
+
+			return $this->fetch('addcinema',['eq'=>1,'title'=>'addcinema']);
 
 		}else{
 			$data = Request::instance()->post();
@@ -104,23 +104,35 @@ class Admin extends Common
 
 
 
+public function addvege(){
+	$id = Request::instance()->param('id');
+	if($id){
+		$info = Db::name('flower')->where(['id'=>$id])->find();
+		$this->assign('info',$info);
+	}
 
+	return $this->fetch('addvege',['eq'=>3,'title'=>'add vage']);
+}
 	#addblog#
-	public function addblog(){
+	public function addflower(){
 		if(Request::instance()->isGet()){
 			$id = Request::instance()->param('id');
-			$info = Db::name('blog')->where(['id'=>$id])->find();
-			return $this->fetch('addblog',['title'=>'addblog','eq'=>2,'info'=>$info]);
+			if($id){
+				$info = Db::name('flower')->where(['id'=>$id])->find();
+				$this->assign('info',$info);
+
+			}
+
+			return $this->fetch('addblog',['title'=>'addflower','eq'=>2]);
 		}else{
 			$data = Request::instance()->post();
 			if($data['id'] >0){
-				Db::name('blog')->update($data,['id'=>$data['id']]);
+				Db::name('flower')->update($data,['id'=>$data['id']]);
 			}else{
 				$data['addtime'] =time();
-				$data['author'] = 'admin';
-				Db::name('blog')->insert($data);
+				Db::name('flower')->insert($data);
 			}
-			
+
 			exit(json_encode(['code'=>1,'msg'=>'成功']));
 
 		}
@@ -142,7 +154,7 @@ class Admin extends Common
 			$res = Db::name('blog')->where(['id'=>$id])->update(['status'=>$t]);
 			exit(json_encode(['code'=>1]));
 		}
-	
+
 	}
 
 
@@ -168,7 +180,7 @@ class Admin extends Common
 		}
 	}
 
-	
+
 	public function addvideo(){
 		// $this->IsAdm(true);
 		if(\think\Request::instance()->isGet()){
@@ -183,10 +195,10 @@ class Admin extends Common
 			$video['title'] = $data['title'];
 			$video['price'] = $data['price'];
 			$video['cover'] = $data['cover'];
-			$video['cate'] = $data['cate'];		
+			$video['cate'] = $data['cate'];
 			$video['publishtime'] = strtotime($data['publishtime']);
 			$video['director'] = $data['director'];
-				
+
 			$r = Db::name('video')->insertGetId($video);
 
 			if($r){
@@ -197,28 +209,28 @@ class Admin extends Common
 			}
 		}
 	}
-	
+
 
 	public function addonline(){
 
-	
+
 		if(\think\Request::instance()->isGet()){
 			return $this->fetch('addonline',['title'=>'add video','eq'=>1]);
 		}else{
 			$data = \think\Request::instance()->post();
-		
+
 			// 新增
 			$video['title'] = $data['title'];
 			$video['cate'] = $data['cate'];
 			$video['cover'] = $data['cover'];
-			
+
 			$video['publishtime'] = strtotime($data['publishtime']);
 			$video['director'] = $data['director'];
 			$video['address'] = $data['address'];
 			$r = Db::name('video')->insertGetId($video);
 
 			if($r){
-	
+
 				exit(json_encode(['code'=>1,'msg'=>'successfully upload']));
 			}else{
 				exit(json_encode(['code'=>0,'msg'=>'failed upload']));
@@ -250,10 +262,10 @@ class Admin extends Common
 	}
 
 
-	
+
 	public function addTag($video,$tagarr){
 		if(!$tagarr) return false;
-		for ($i=0; $i < count($tagarr); $i++) { 
+		for ($i=0; $i < count($tagarr); $i++) {
 				$tag = Db::name('tag')->where(['tag'=>$tagarr[$i]])->find();
 				if($tag){
 					Db::name('tag')->where(['tag'=>$tagarr[$i]])->setInc('count',1);
@@ -267,27 +279,54 @@ class Admin extends Common
 	}
 
 
-	//博客列表
-		public function bloglist(){
+	//列表
+		public function flowerlist(){
 		// $this->IsAdm();
 		if(\think\Request::instance()->isGet()){
-			$this->title = ' 博客列表';
+			$this->title = ' flower列表';
 			$p = input('p')?input('p'):1;
 			$word = input('word');
 			$map = array();
-			if($word) $map['title'] = array('like','%'.$word.'%');
-			$list = Db::name('blog')->paginate(10);
+			if($word) $map['name'] = array('like','%'.$word.'%');
+			$list = Db::name('flower')->where(['type'=>1])->paginate(10);
 			$page = $list->render();
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
 			$this->assign('list',$list);
-			return $this->fetch('bloglist',['title'=>'博客列表','eq'=>2]);
+			return $this->fetch('flowerlist',['title'=>'花卉列表','eq'=>2]);
 		}else{
 			$id = input('id');
-			Db::name('blog')->where(['id'=>$id])->delete();
+			Db::name('flower')->where(['id'=>$id])->delete();
 			exit(json_encode(['ret'=>1,'msg'=>'删除成功']));
 		}
 	}
+
+
+
+	public function vegelist(){
+	// $this->IsAdm();
+	if(\think\Request::instance()->isGet()){
+		$this->title = ' vege列表';
+		$p = input('p')?input('p'):1;
+		$word = input('word');
+		$map = array();
+		if($word) $map['name'] = array('like','%'.$word.'%');
+		$list = Db::name('flower')->where(array('type'=>2))->paginate(10);
+		$page = $list->render();
+		$this->assign('page',$page);// 赋值分页输出
+		//分页跳转的时候保证查询条件
+		$this->assign('list',$list);
+		return $this->fetch('vegelist',['title'=>'vege列表','eq'=>2]);
+	}else{
+		$id = input('id');
+		Db::name('flower')->where(['id'=>$id])->delete();
+		exit(json_encode(['ret'=>1,'msg'=>'删除成功']));
+	}
+}
+
+
+
+
 
 
 	//添加公告编辑
@@ -419,7 +458,7 @@ class Admin extends Common
 
 			$p = input('page')?input('page'):1;
 			$list = Db::name('likes')
-			->field("likes.id,user.nickname,blog.title,likes.addtime") 
+			->field("likes.id,user.nickname,blog.title,likes.addtime")
 			->join('blog','blog.id=likes.blogid')
 			->join('user','user.id=likes.userid')
 			->paginate(10);//分页

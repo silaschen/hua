@@ -3,8 +3,8 @@
   <!-- 搜索 -->
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">视频列表</h3>
-      <a href="{:url('Sys/addvideo')}" class='btn btn-success btn-xs pull-right'>添加视频</a>
+      <h3 class="box-title">flower列表</h3>
+      <a href="{:url('Admin/addflower')}" class='btn btn-success btn-xs pull-right'>添加flower</a>
     </div>
     <div class="box-body">
       <form method="GET" action="{:url('Sys/artlist')}" id='form'>
@@ -29,15 +29,26 @@
         <tbody>
           <tr>
             <th>ID</th>
-            <th>标题</th>
-            <th>写作时间</th>
+            <th>cover</th>
+            <th>name</th>
+            <th>cate</th>
+            <th>price</th>
+            <th>level</th>
+            <th>stock</th>
+            <th>time</th>
             <th>操作</th>
           </tr>
           {volist name="list" id="vo"}
           <tr>
-            <td>{$vo.id}</td><td>{$vo.title}</td>
+            <td>{$vo.id}</td>
+            <td><img src="{$Think.Config.WEBSERVER}/{$vo.cover}" width="50"></td>
+            <td>{$vo.name}</td>
+            <td>{$vo.cate}</td>
+            <td><span class="label label-success">{$vo.price}</span></td>
+            <td>{$vo.level}</td>
+            <td>{$vo.stock}</td>
         <td>{$vo.addtime|date="Y-m-d H:i",###}</td>
-          
+
             <td>
               <div class="btn-group">
                 <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown">
@@ -46,8 +57,8 @@
                   <span class="sr-only">+</span>
                 </button>
                 <ul class="dropdown-menu" role="menu">
-                  <li><a href="{:url('index/admin/addblog',array('id'=>$vo['id']))}">编辑</a></li>
-           
+                  <li><a href="{:url('index/admin/addflower',array('id'=>$vo['id']))}">编辑</a></li>
+
                   <li class="divider"></li>
                   <li><a href="javascript:setstat({$vo.id},-1);">删除</a></li>
                 </ul>
@@ -57,11 +68,11 @@
           {/volist}
         </tbody>
       </table>
-       
+
     </div><!-- /.box-body -->
     <div class="box-footer clearfix">
 	    <ul class="pagination pagination-sm no-margin pull-right">{$page}</ul>
-	  </div>    
+	  </div>
   </div>
 <script type="text/javascript">
 function setstat(id,t){
