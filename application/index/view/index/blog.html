@@ -1,0 +1,56 @@
+{extend name='index:base'}
+{block name='main'}
+	<ol class="breadcrumb">
+			  <li><a href="index.html">Home</a></li>
+			  <li class="active">博客</li>
+			</ol>
+
+	<div class="blog-section">
+		<div class="col-md-8 blog-posts">
+			<h3 class="post">Latest Posts</h3>
+
+
+			<div class="blog-top">
+
+				{foreach name='blog' item='vo'}
+
+			  <div class="col-md-6 grid_3">
+					<a href="{:url('index/index/readblog',array('id'=>$vo['id']))}"><img src="{$Think.config.WEBSERVER}/{$vo.cover}" class="img-responsive" alt=""></a>
+					<div class="blog-poast-info">
+						<ul>
+							<li><i class="fa fa-user"></i><a class="admin" href="{:url('index/index/readblog',array('id'=>$vo['id']))}"><span> </span>cube</a></li>
+							<li><i class="fa fa-calendar"></i><span> </span>{$vo.addtime|date="Y-m-d",###}</li>
+							<li><i class="fa fa-comments"></i><a class="p-blog" href="#"><span> </span>3 评论 </a></li>
+						</ul>
+				    </div>
+					<h3><a href="single.html">{$vo.title}</a></h3>
+					<p>{$vo.desciption}</p>
+					
+				</div>
+
+				{/foreach}
+
+
+				<div class="clearfix"></div>
+			  </div>
+			
+
+
+
+		</div>
+		<div class="col-md-4 blog-categories">
+			<h3 class="post">最热博客</h3>
+			{foreach name='hot' item='hvo'}
+			<p><a href="{:url('index/index/readblog',array('id'=>$hvo['id']))}">{$hvo.title}</a></p>
+			{/foreach}
+		</div>
+				<div class="clearfix"></div>
+	</div>
+	<div class="blog-pagimation">
+
+
+	{$page}
+
+		  </div>
+	<div class="clearfix"></div>
+	{/block}

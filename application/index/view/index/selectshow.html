@@ -1,0 +1,67 @@
+{extend name="index:base"}
+{block name='main'}
+
+<!-- AddThis Smart Layers END -->
+	<div class="m-tickets-instantly">
+		<h4>Book tickets instantly</h4>
+		<div class="fleft m-select">
+                        <label><input id="rdbMovie" name="rdbMovieSearch" type="radio" class="checkins" onclick="fnOcCriteria('ET', 'MT');" checked="checked">
+                        <span class="fleft mr20">Movies</span></label>
+                        <label><input id="rdbCinema" name="rdbMovieSearch" type="radio" class="checkins" onclick="fnOcCriteria('VN', 'MT');" checked="checked">
+                        <span class="fleft mr20">Cinemas</span></label>
+                    </div>
+
+		<div class="m-select-date">
+					<select class="list_of_movies"><option value="">Select Date</option><option style="padding-left: 10px;" value="ANAN">Today, 18 jun</option><option style="padding-left: 10px;" value="CHDM">Tomorrow, 19 jun</option><option style="padding-left: 10px;" value="CHDM">saturday, 20 jun</option><option style="padding-left: 10px;" value="CHDM">sunday, 21 jun</option></select>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div class="now-showing-list">
+		<div class="col-md-4 movies-by-category movie-booking">
+			<h5>{$film[0]['title']}</h5>
+			<div class="movie-ticket-book">
+					<div class="clearfix"></div>
+					<img src="images/movie-show.jpg" alt="" />
+					<div class="bahubali-details">
+						<h4>放映日期:</h4>
+						<p>{$film[0]['publishtime']|date="M d,Y",###}</p>
+						<h4>时长:</h4>
+						<p>2 hrs 30 mins</p>
+						<h4>导演:</h4>
+						<p>{$film[0]['director']}</p>
+						<h4>语言:</h4>
+						<p>English</p>
+						<p>介绍</p>
+					</div>
+				</div>
+			</div>
+		<div class="col-md-8 movies-dates">	
+
+			{foreach name='moviedates' item='da'}
+			<div class="movie-date-selection">
+				<ul>
+				<!-- <li>valid date:{$da.btime|date="Y-m-d",###}----{$da.etime|date="Y-m-d",###}</li> -->
+					<li class="location">
+						<a href="pic-a-movie.html"><i class="fa fa-map-marker"></i>{$da.name}: {$da.address}</a>
+					</li>
+					{foreach name='da.time' item='v'}
+					<li class="time">
+						<a href="{:url('Index/index/payment',array('cid'=>$da['cinemaid'],'vid'=>$film[0]['id'],'time'=>$v,'tid'=>$da['id']))}">{$v}</a>
+					</li>
+					{/foreach}
+	
+				</ul>
+			</div>
+			{/foreach}
+
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	
+
+
+{/block}
+
+
+
+

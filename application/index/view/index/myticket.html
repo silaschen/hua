@@ -1,0 +1,44 @@
+{extend name="index:base" /}
+{block name="main"}
+  <link href="http://vjs.zencdn.net/6.4.0/video-js.css" rel="stylesheet">
+  <!-- If you'd like to support IE8 -->
+  <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
+<style type="text/css">
+  @media screen and (max-width: 500px) {
+    #my-video{
+      /*  width: 320px;
+        height: 250px;*/
+        width: 100%;
+        height: 250px;
+    }
+/*    .m{margin: -20px auto;width: 320px;height: 250px}*/
+  }
+  @media screen and (min-width: 800px) {
+    #my-video{
+       /* width: 740px;
+        height: 400px;*/
+        width: 100%;
+        height: 450px;
+    }
+    /*.m{margin: -20px auto;width: 740px;height: 400px}*/
+}
+</style>
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+
+        {foreach $ticket as $vo}
+              <div class="panel panel-default">
+                <div class="panel-heading">票价￥{$vo.money}<span class="pull-right"> 有效期:{$vo.btime|date='Y-m-d',###}----{$vo.etime|date="Y-m-d",###}</span></div>
+                <div class="panel-body">
+                  订单号:{$vo.orderid}
+                  {$vo.title}  &nbsp  &nbsp<span class="label label-success">已支付</span>  <hr>
+                  {$vo.name} &nbsp&nbsp{$vo.time} 
+                </div>
+              </div>
+
+        {/foreach}
+    </div>
+</div>
+
+
+{/block}

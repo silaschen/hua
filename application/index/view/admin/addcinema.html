@@ -1,0 +1,47 @@
+{extend name="admin:base" /}
+{block name="main"}
+  <link rel="stylesheet" href="/public/com/jQuery-File-Upload-9.9.3/css/jquery.fileupload.css">
+  <div class="box box-solid">
+    <div class="box-header with-border">
+      <h3 class="box-title">添加/编辑视频</h3><a href="{:url('Admin/videolist')}" class='btn btn-default btn-xs pull-right'>返回列表</a>
+    </div><!-- /.box-header -->
+    <div class="box-body">
+         <form method="POST" id='form'>
+         
+            <div class='form-group'>
+              <label>影院名称</label>
+              <input type='text' name='name' class='form-control'>
+            </div>
+
+            <div class="form-group">
+              <label>账号</label>
+              <input type="text" name="user" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>密码</label>
+              <input type="password" name="pwd" class="form-control">
+            </div>
+ 
+        	<div class="form-group">
+        		<label>地址</label>
+        		<input type='text' class='form-control' name='address'>			
+        	</div>
+
+
+         </form>
+    </div><!-- /.box-body -->
+    <div class="box-footer clearfix">
+      <button type="button" onclick="savecinames();" class="btn btn-success pull-right savecinames">确定</button>
+    </div>   
+  </div>
+
+<script type="text/javascript">
+function savecinames(){
+  $.post("{:url('Admin/addcinema')}",$("#form").serialize(),function(data){
+      alert(data.msg);
+   
+  },'JSON');
+}
+</script>
+{/block}
