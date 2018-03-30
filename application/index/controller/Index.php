@@ -13,12 +13,20 @@ class Index extends Common
 	*Db::query()  数据库查询sql执行
 	*/
     public function index(){
-    	//导航推荐,及在线影视推荐
-
-		return $this->fetch('index');
+    	//查询4个花卉，4个蔬菜，并随机排序，用于主页面展示
+      $flower = Db::query("select * from flower  where type=1 order by id desc limit 4");
+      $vege = Db::query("select * from flower where type=2 order by id desc limit 4");
+      $data = array_merge($flower,$vege);
+      shuffle($data);
+      $this->assign('flower',$data);
+		  return $this->fetch('index');
     }
 
 
+    /**
+     * 商店首页，默认展示花卉分类下的，多肉植物
+     *可根据左侧筛选条件筛选
+     */
     public function store(){
       //select flower cae=1 and type=1
       $type = input('type');
@@ -33,9 +41,17 @@ class Index extends Common
     	return $this->fetch('shop');
     }
 
+    //about page
+    public function about(){
+        return $this->fetch('about');
+    }
 
-    //注册,exit,josn_encode($param)
+
+  //注册,exit,josn_encode($param)
 	public function register(){
+    if(\think\Request::instance()->isGet()){
+      return $this->fetch('register');
+    }else{
 			$data = \think\Request::instance()->post();//获取前端传过来的的值，数组
 			$data['password'] = md5($data['password']);
 			$findsql = "SELECT * from user where nickname='{$data['nickname']}'";
@@ -44,33 +60,34 @@ class Index extends Common
 			if($status){
 				exit(json_encode(array('code'=>-10,'msg'=>'此昵称已被注册')));
 			}
-
 			//插入sql
-			$addsql=sprintf("insert into user VALUES ('','%s','%s','%s','%s','%s','%s')",$data['nickname'],$data['email'],$data['phone'],$data['password'],$data['sex'],time());
+			$addsql=sprintf("insert into user VALUES ('','%s','%s','%s','%s','%s')",$data['nickname'],$data['phone'],$data['email'],$data['password'],time());
 			//执行插入sql语句
+      // var_dump($addsql);exit;
 			$db = Db::execute($addsql);
 			if($db){
-				exit(json_encode(['code'=>1]));
+				exit(json_encode(['code'=>1,'msg'=>'注册成功，请登录']));
 			}else{
 				exit(json_encode(['code'=>0]));
 			}
-
+    }
 	}
 
 
 	//登录函数，session
 	public function login(){
-		$email = \think\Request::instance()->post('email');
-		$password =\think\Request::instance()->post('password');
-		$pwd = md5($password);
-		$user = Db::query("select * from user where email='$email' AND password='$pwd'");
-		if($user){
-			$this->SetUserLogin($user);
-			exit(json_encode(['code'=>1,'nickname'=>$user[0]['nickname']]));
-		}else{
 
-			exit(json_encode(['code'=>0]));
-		}
+      $account = \think\Request::instance()->post('account');
+  		$password =\think\Request::instance()->post('password');
+  		$pwd = md5($password);
+  		$user = Db::query("select * from user where password='$pwd' OR email='$account' OR phone='$account'");
+  		if($user){
+  			$this->SetUserLogin($user);
+  			exit(json_encode(['code'=>1,'nickname'=>$user[0]['nickname'],'msg'=>'success']));
+  		}else{
+  			exit(json_encode(['code'=>0,'msg'=>'error']));
+  		}
+
 	}
 
 

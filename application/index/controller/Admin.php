@@ -111,7 +111,7 @@ public function addvege(){
 		$this->assign('info',$info);
 	}
 
-	return $this->fetch('addvege',['eq'=>3,'title'=>'add vage']);
+	return $this->fetch('addvege',['eq'=>'蔬菜管理','title'=>'add vage']);
 }
 	#addblog#
 	public function addflower(){
@@ -120,10 +120,8 @@ public function addvege(){
 			if($id){
 				$info = Db::name('flower')->where(['id'=>$id])->find();
 				$this->assign('info',$info);
-
 			}
-
-			return $this->fetch('addblog',['title'=>'addflower','eq'=>2]);
+			return $this->fetch('addflower',['title'=>'addflower','eq'=>'花卉管理']);
 		}else{
 			$data = Request::instance()->post();
 			if($data['id'] >0){
@@ -293,7 +291,7 @@ public function addvege(){
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
 			$this->assign('list',$list);
-			return $this->fetch('flowerlist',['title'=>'花卉列表','eq'=>2]);
+			return $this->fetch('flowerlist',['title'=>'花卉管理','eq'=>'花卉管理']);
 		}else{
 			$id = input('id');
 			Db::name('flower')->where(['id'=>$id])->delete();
@@ -316,7 +314,7 @@ public function addvege(){
 		$this->assign('page',$page);// 赋值分页输出
 		//分页跳转的时候保证查询条件
 		$this->assign('list',$list);
-		return $this->fetch('vegelist',['title'=>'vege列表','eq'=>2]);
+		return $this->fetch('vegelist',['title'=>'蔬菜管理','eq'=>2]);
 	}else{
 		$id = input('id');
 		Db::name('flower')->where(['id'=>$id])->delete();
