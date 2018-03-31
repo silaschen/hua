@@ -284,16 +284,7 @@
 
 
             <section class="gallery-box">
-                <!-- <div class="wrapper">
-                    <div class="row-1 wow rollIn center">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div class="section-title-box custom-5">
-                                <h2>Recent Projects</h2>
-                                <span>Nam lobortis fringilla felis. Fusce vol utpat urna cras utnec quam vitae turpis</span>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+
                 <div class="gallery-wrapper">
                     <div class="g-row">
                         <div class="g-item">
@@ -757,257 +748,41 @@
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div id="owl-team">
+
+
+															{foreach name='news' item="new"}
                                 <div class="item wow rollIn center">
                                     <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-4.jpg" alt="img">
+                                        <img src="{$Think.Config.WEBSERVER}/{$new['cover']}" alt="img">
                                         <span class="date-post">10 <span>Apr</span></span>
                                         <div class="post-icon">
                                             <span class="ef icon_image "></span>
                                         </div>
                                     </div>
                                     <div class="team-info-block">
-                                        <h4>Curabitur cursus porta lectus</h4>
+                                        <h4>{$new['title']}</h4>
                                         <div class="info-box">
                                             <ul>
                                                 <li>
                                                     By Admin
                                                 </li>
                                                 <li>
-                                                    Garden Care
+                                                    hua.com
                                                 </li>
                                                 <li>
                                                     3 Comments
                                                 </li>
                                             </ul>
                                         </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
+                                        <p>{$new['description']}</p>
                                     </div>
                                 </div>
 
-                                <div class="item wow pulse">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-5.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_pencil_alt "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Suspendisse purus id sapien</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
 
-                                <div class="item wow bounceInRight center">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-6.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_film "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Mauris lectus enim luctus vitae</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
 
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-4.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_image "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Curabitur cursus porta lectus</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
+                              {/foreach}
 
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-5.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_pencil_alt "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Suspendisse purus id sapien</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
 
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-6.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_film "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Mauris lectus enim luctus vitae</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-4.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_image "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Curabitur cursus porta lectus</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-5.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_pencil_alt "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Suspendisse purus id sapien</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
-
-                                <div class="item">
-                                    <div class="team-img h-post-image">
-                                        <img src="{$Think.Config.WEBSERVER}/public/hua/media/370x230/img-6.jpg" alt="img">
-                                        <span class="date-post">10 <span>Apr</span></span>
-                                        <div class="post-icon">
-                                            <span class="ef icon_film "></span>
-                                        </div>
-                                    </div>
-                                    <div class="team-info-block">
-                                        <h4>Mauris lectus enim luctus vitae</h4>
-                                        <div class="info-box">
-                                            <ul>
-                                                <li>
-                                                    By Admin
-                                                </li>
-                                                <li>
-                                                    Garden Care
-                                                </li>
-                                                <li>
-                                                    3 Comments
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        <p>Neque arcu tincidunt neque pharetra coduct mod nibh leo non libero. Cras augue ipsum phare train
-                                            sed.  Integ er ante nunc accumsan.</p>
-                                    </div>
-                                </div>
 
                             </div>
                         </div>

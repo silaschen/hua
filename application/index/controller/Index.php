@@ -18,6 +18,10 @@ class Index extends Common
       $data = array_merge($flower,$vege);
       shuffle($data);
       $this->assign('flower',$data);
+
+      //latest 6 news blog
+      $blog = Db::query("select id,title,description,cover FROM blog order by id desc limit 6");
+      $this->assign('news',$blog);
 		  return $this->fetch('index');
     }
 
@@ -120,6 +124,7 @@ class Index extends Common
 			$data = Request::instance()->post();
 			$data['addtime'] = time();
       $data['uid'] = \think\Session::get('login_uid');
+      if(!$data['uid']) exit(json_encode(['code'=>-8,'msg'=>'you need to login']));
       $price = Db::query(sprintf("select price from flower where id=%d",$data['flowerid']))[0]['price'];
       //total fee
       $data['fee'] = $data['num']*$price;
@@ -173,24 +178,30 @@ class Index extends Common
 
 
 
-	// //读博客
-	// public function readblog(){
-	// 	//导航推荐,及在线影视推荐
-  //   	$this->navdata();//每个函数都要用，所以封装一个新的函数，复用即可
-  //
-	// 	$id = input('id');
-	// 	$blog = Db::name('blog')->where(array('id'=>$id))->find();
-	// 	$this->assign('blog',$blog);
-	// 	$comment = Db::query("select a.content,a.addtime,b.nickname from blog_comment a left join user b ON a.uid=b.id where a.blogid='{$id}'");
-	// 	$this->assign('webserver',\Think\Config::get('WEBSERVER')."/");
-	// 	$this->assign('comments',$comment);
-  //
-	// 	//最新博客
-	// 	$latest = Db::query("select id,title from blog order by addtime desc limit 15");
-	// 	$this->assign('latest',$latest);
-	// 	return $this->fetch('single');
-	// }
+	 //读博客
+	public function readblog(){
+		$id = input('id');
+		$blog = Db::name('blog')->where(array('id'=>$id))->find();
+		$this->assign('blog',$blog);
+		$this->assign('webserver',\Think\Config::get('WEBSERVER')."/");
+		//最新博客
+		$latest = Db::query("select id,title from blog order by addtime desc limit 15");
+		$this->assign('latest',$latest);
+		return $this->fetch('single');
+	}
 
+
+  //News
+  public function news(){
+    $all = Db::name('blog')->order('id desc')->paginate(5);
+    $this->assign('all',$all);
+    //suggest products
+    $hot = Db::query("select * from flower order by id desc limit 5");
+    $this->assign('hot',$hot);
+    return $this->fetch('blog');
+
+
+  }
 
     public function sendm(){
         $body = "please click the link below to finish check"."\n"."http://www.liondog.cn";

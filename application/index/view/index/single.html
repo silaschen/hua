@@ -1,11 +1,11 @@
 {extend name='index:base'}
 {block name='main'}
 
-    
+
 <!-- AddThis Smart Layers END -->
 
 	<ol class="breadcrumb">
-			  <li><a href="index.html">Home</a></li>
+			  <li><a href="{:url('index/index/index')}">Home</a></li>
 			  <li class="active">博客详情</li>
 			</ol>
 
@@ -21,39 +21,7 @@
 
 					<div class="clearfix"></div>
 
-					<div class="comments">
-						<h5>评论</h5>
 
-						<div id="comment_box">
-							
-
-
-						</div>
-
-						{foreach name='comments' item='vo'}
-						<div class="comment">
-						<!-- 	<div class="client">
-								<img src="{$Think.config.WEBSERVER}/public/film/images/c1.jpg" alt="">
-							</div> -->
-							<div class="client-message">
-								<p><a href="#">{$vo.nickname}</a><i class="fa fa-calendar"></i>{$vo.addtime|date="M d,H:i",###}</p>
-								<h6>{$vo.content}.</h6>
-							</div>
-							<div class="clearfix"></div>
-						</div>
-						
-						{/foreach}
-
-						<textarea type="text" name="comment" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Your comment...';}" required="">Your comment...</textarea>
-						{if condition="$Think.session.login_uid neq ''"}
-					<button class="btn btn-block" onclick="commentblog()">评论</button>	
-	{else}
-
-<p>你还没登录，请点此
-	<button onclick="$('#loginmodal').modal('show');">登录</button></p>
-
-{/if}
-				</div>
 				<div class="clearfix"></div>
 			</div>
 		</div>
@@ -84,7 +52,7 @@ function commentblog(){
 					// 			<img src="{$Think.config.WEBSERVER}/public/film/images/c1.jpg" alt="">
 					// 		</div>
 					var commentblog = `<div class="comment">
-						
+
 							<div class="client-message">
 								<p><a href="#">`+`{$Think.session.login_nick}`+`</a><i class="fa fa-calendar"></i>2 hours ago</p>
 								<h6>`+comment+`</h6>

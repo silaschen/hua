@@ -1,56 +1,149 @@
-{extend name='index:base'}
-{block name='main'}
-	<ol class="breadcrumb">
-			  <li><a href="index.html">Home</a></li>
-			  <li class="active">博客</li>
-			</ol>
+﻿{extend name="index:base"/}
+{block name="main"}
+			<div class="bg-wrapper">
+				<section id="title-box" class="paralax bg-opacity-color blog-post">
+					<div class="wrapper">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<h1>Blog</h1>
+							<span class="subtitle">Latest News from MasterFarmer</span>
+						</div>
+					</div>
+				</section>
+				<section id="breadcrumbs" class="tooth tooth-green">
+					<div class="section-bg">
+						<div class="wrapper">
+							<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<ul>
+									<li>
+										<a href=".">Home</a>
+									</li>
+									<li>
+										<span>Blog</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</section>
+				<section class="two-columns">
+					<div class="wrapper">
+						<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 pull-right">
+							<div class="right-content">
 
-	<div class="blog-section">
-		<div class="col-md-8 blog-posts">
-			<h3 class="post">Latest Posts</h3>
+{foreach name='all' item="vo"}
+
+								<div class="blog-post-teaser wow fadeInUp">
+									<div class="image-blog-post-block">
+										<img class="full-width" src="{$Think.Config.WEBSERVER}/public/hua/media/850x400/post1-img.jpg" alt="image">
+										<span class="date-post">10 <span>Apr</span></span>
+									</div>
+
+									<div class="info-box">
+										<ul>
+											<li>
+												<span class="ef icon_profile"></span>
+												By Admin
+											</li>
+											<li>
+												<span class="ef icon_folder-open "></span>
+												Hua.com
+											</li>
+											<li>
+
+										</ul>
+									</div>
+									<div class="blog-teaser-content">
+										<h2 class="title">{$vo['title']}</h2>
+										<p>{$vo['description']}</p>
+									</div>
+									<a class="btn btn-border wow bounceInUp center" href="{:url('index/index/readblog',array('id'=>$vo['id']))}">
+										<span>Read More</span>
+									</a>
+								</div>
+
+{/foreach}
 
 
-			<div class="blog-top">
-
-				{foreach name='blog' item='vo'}
-
-			  <div class="col-md-6 grid_3">
-					<a href="{:url('index/index/readblog',array('id'=>$vo['id']))}"><img src="{$Think.config.WEBSERVER}/{$vo.cover}" class="img-responsive" alt=""></a>
-					<div class="blog-poast-info">
-						<ul>
-							<li><i class="fa fa-user"></i><a class="admin" href="{:url('index/index/readblog',array('id'=>$vo['id']))}"><span> </span>cube</a></li>
-							<li><i class="fa fa-calendar"></i><span> </span>{$vo.addtime|date="Y-m-d",###}</li>
-							<li><i class="fa fa-comments"></i><a class="p-blog" href="#"><span> </span>3 评论 </a></li>
-						</ul>
-				    </div>
-					<h3><a href="single.html">{$vo.title}</a></h3>
-					<p>{$vo.desciption}</p>
-					
-				</div>
-
-				{/foreach}
-
-
-				<div class="clearfix"></div>
-			  </div>
-			
 
 
 
-		</div>
-		<div class="col-md-4 blog-categories">
-			<h3 class="post">最热博客</h3>
-			{foreach name='hot' item='hvo'}
-			<p><a href="{:url('index/index/readblog',array('id'=>$hvo['id']))}">{$hvo.title}</a></p>
-			{/foreach}
-		</div>
-				<div class="clearfix"></div>
-	</div>
-	<div class="blog-pagimation">
+								<!-- <div class="blog-post-teaser wow fadeInUp">
 
 
-	{$page}
+								</div> -->
 
-		  </div>
-	<div class="clearfix"></div>
-	{/block}
+
+									{$all->render()}
+
+
+							</div>
+						</div>
+						<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+
+							<div class="left-block-wrapper wow fadeInUp">
+								<div class="title-left-block">
+									<h3 class="text-uppercase">Recent Posts</h3>
+								</div>
+								<div class="lb-content recent-posts">
+									<ul>
+										<li>
+											<a href="." class="l-text-box">Lorem ipsum dolor sit amet sed consectetur adipisicing do</a>
+											<span class="date">
+												<i class="ef icon_clock"></i>
+												16 April 2015
+											</span>
+										</li>
+										<li>
+											<a href="." class="l-text-box">Lorem ipsum dolor sit amet sed consectetur adipisicing do</a>
+											<span class="date">
+												<i class="ef icon_clock"></i>
+												16 April 2015
+											</span>
+										</li>
+										<li>
+											<a href="." class="l-text-box">Lorem ipsum dolor sit amet sed consectetur adipisicing do</a>
+											<span class="date">
+												<i class="ef icon_clock"></i>
+												16 April 2015
+											</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+
+
+							<div class="left-block-wrapper wow fadeInUp">
+								<div class="title-left-block">
+									<h3 class="text-uppercase">Popular production</h3>
+								</div>
+								<div class="lb-content post-commented">
+									<nav>
+										<ul>
+
+											{foreach name='hot' item='hvo'}
+											<li>
+												<div class="item"><img width="100%" src="{$Think.Config.WEBSERVER}/{$hvo['cover']}" alt="image 1"></div>
+												<div class="post-commented-text">
+													<a href="." class="l-text-box">{$hvo['name']}</a>
+													<span class="date">
+
+														<a style="width: 100px;background: #e4ff00;padding: 10px 10px;text-align: center;" href="{:url('index/index/buy',['id'=>$hvo['id']])}" class="">Buy now</a>
+													</span>
+												</div>
+											</li>
+
+											{/foreach}
+
+										</ul>
+									</nav>
+								</div>
+							</div>
+
+
+
+						</div>
+					</div>
+				</section>
+			</div>
+			{/block}

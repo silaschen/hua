@@ -113,7 +113,16 @@ public function addvege(){
 
 	return $this->fetch('addvege',['eq'=>'蔬菜管理','title'=>'add vage']);
 }
-	#addblog#
+
+
+
+
+
+
+
+
+
+
 	public function addflower(){
 		if(Request::instance()->isGet()){
 			$id = Request::instance()->param('id');
@@ -154,6 +163,54 @@ public function addvege(){
 		}
 
 	}
+
+	#addblog#
+	public function addblog(){
+		// $this->isAdmin();
+		if(Request::instance()->isGet()){
+			$id = Request::instance()->param('id');
+			$info = Db::name('blog')->where(['id'=>$id])->find();
+			return $this->fetch('addblog',['title'=>'addblog','eq'=>2,'info'=>$info]);
+		}else{
+			$data = Request::instance()->post();
+			if($data['id'] >0){
+				Db::name('blog')->update($data,['id'=>$data['id']]);
+			}else{
+				$data['addtime'] =time();
+				$data['author'] = 'admin';
+				Db::name('blog')->insert($data);
+			}
+
+			exit(json_encode(['code'=>1,'msg'=>'成功']));
+
+		}
+	}
+
+
+
+	//博客列表
+		public function bloglist(){
+				// $this->isAdmin();
+		if(\think\Request::instance()->isGet()){
+			$this->title = ' 博客列表';
+			$p = input('p')?input('p'):1;
+			$word = input('word');
+			$map = array();
+			if($word) $map['title'] = array('like','%'.$word.'%');
+			$list = Db::name('blog')->paginate(10);
+			$page = $list->render();
+			$this->assign('page',$page);// 赋值分页输出
+			//分页跳转的时候保证查询条件
+			$this->assign('list',$list);
+			return $this->fetch('bloglist',['title'=>'博客列表','eq'=>2]);
+		}else{
+			$id = input('id');
+			Db::name('blog')->where(['id'=>$id])->delete();
+			exit(json_encode(['ret'=>1,'msg'=>'删除成功']));
+		}
+	}
+
+
 
 
 
