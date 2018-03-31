@@ -48,7 +48,7 @@
 									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 										<div class="product-box">
 											<div class="product-image">
-												<a href="shop-2.html">
+												<a href="{:url('index/index/buy',array('id'=>$vo['id']))}">
 													<img src="{$Think.Config.WEBSERVER}/{$vo['cover']}" alt="product">
 												</a>
 											</div>
@@ -57,7 +57,7 @@
 												<div class="product-desc">Sale off</div>
 												<div class="row-pr">
 													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
+														<a href="{:url('index/index/buy',array('id'=>$vo['id']))}" class="add-to-cart pull-right"><span>Add to Cart</span></a>
 													</div>
 													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 														<div class="price">${$vo['price']}</div>
@@ -127,7 +127,7 @@
 												<li><a href="#">水培植物</a></li>
 											</ul>
 										</div>
-		
+
 										<h3>
 											<span class="fi flaticon-plants5"></span>
 											<span class="title-accordion-menu-item">蔬菜瓜果</span>

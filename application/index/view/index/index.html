@@ -82,55 +82,6 @@
             </section>
 
 
-            <!-- <section class="row4"> -->
-                <!-- <div class="wrapper">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 wow bounceInUp">
-                            <div class="allocated-block">
-                                <span class="flaticon-plants3 circle"></span>
-                                <h4>花卉</h4>
-                                <div>选自全球的花卉品种，专业养护，室内室外，高贵的花卉应用仅有</div>
-                                <a class="btn btn-border color-1 big" href="blog-post.html">
-                                    <span>了解更多</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 wow bounceInUp">
-                            <div class="allocated-block">
-                                <span class="flaticon-machine2 circle"></span>
-                                <h4>为什么专业</h4>
-                                <div>专业的花卉种植人员，全身心每天呵护</div>
-                                <a class="btn btn-border color-1 big" href="blog-post.html">
-                                    <span>READ MORE</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 wow bounceInUp">
-                            <div class="allocated-block">
-                                <span class="flaticon-insect18 circle"></span>
-                                <h4>蔬菜</h4>
-                                <div>无公害种植各种蔬菜，无农药，无施肥，真正全天然。</div>
-                                <a class="btn btn-border color-1 big" href="blog-post.html">
-                                    <span>READ MORE</span>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 wow bounceInUp">
-                            <div class="allocated-block">
-                                <i class="flaticon-fences2 circle"></i>
-                                <h4>免费咨询服务</h4>
-                                <div>任何关于花卉的问题，免费提供咨询及建议。</div>
-                                <a class="btn btn-border color-1 big" href="blog-post.html">
-                                    <span>READ MORE</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section> -->
-
-
-
 
 
 <section class="services">
@@ -142,7 +93,7 @@
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				<div class="product-box">
 					<div class="product-image">
-						<a href="shop-2.html">
+						<a href="{:url('index/index/buy',array('id'=>$vo['id']))}">
 							<img src="{$Think.Config.WEBSERVER}/{$vo['cover']}" alt="product">
 						</a>
 					</div>
@@ -151,7 +102,7 @@
 						<div class="product-desc">Sale off</div>
 						<div class="row-pr">
 							<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-								<button class="add-to-cart pull-right"><span>Add to Cart</span></button>
+								<a class="add-to-cart pull-right" href="{:url('index/index/buy',array('id'=>$vo['id']))}"><span>Add to Cart</span></a>
 							</div>
 							<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 								<div class="price">${$vo['price']}</div>

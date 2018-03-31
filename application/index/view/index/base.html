@@ -7,7 +7,7 @@
         <link rel="shortcut icon" type="image/x-icon" href="favicon.png" />
 
         <link href="{$Think.Config.WEBSERVER}/public/hua/css/master.css" rel="stylesheet">
-        <link href="{$Think.Config.WEBSERVER}/public/hua/css/bootstrap.min.css" rel="stylesheet">
+        <!-- <link href="{$Think.Config.WEBSERVER}/public/hua/css/bootstrap.min.css" rel="stylesheet"> -->
 
         <!-- SWITCHER -->
         <link rel="stylesheet" id="switcher-css" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/switcher.css" media="all" />
@@ -62,10 +62,16 @@
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="loginarea">
+                          {if condition="$Think.Session.login_uid neq ''"}
 
+                                  <a href="{:url('index/index/logout')}" class="btn extra-color text-uppercase pull-right">({$Think.Session.login_nick})登出</a>
+                                  <a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的订单</a>
+
+                          {else/}
                             <a href="javascript:$('#loginmod').modal()"  class="btn extra-color text-uppercase pull-right" style="margin-left:10px;">登录</a>
 
                               <a href="{:url('index/index/register')}" class="btn extra-color text-uppercase pull-right">注册</a>
+                          {/if}
                         </div>
                     </div>
                 </div>
@@ -102,11 +108,10 @@
                                         </form>
                                         <a class="iconSearch" href="#">
                                             <span class="ef icon_search"></span>                                        </a>                                    </li>
-                                    <li><a class="#" href="index.html">Home</a></li>
-                                    <li><a class="#" href="about.html">关于</a></li>
+                                    <li><a class="#" href="{:url('index/index/index')}">Home</a></li>
+                                    <li><a class="#" href="{:url('index/index/about')}">关于</a></li>
                                     <li><a class="#" href="#">服务</a></li>
-                                    <li><a class="#" href="{:url('index/index/store')}">产品</a></li>
-                                    <li><a class="#" href="shop.html">在线选购</a></li>
+                                    <li><a class="#" href="{:url('index/index/store')}">在线选购</a></li>
                                     <li><a class="#" href="blog.html">新闻</a></li>
                                     <li><a class="#" href="contact.html">联系我们</a></li>
 

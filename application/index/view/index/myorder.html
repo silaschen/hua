@@ -1,0 +1,58 @@
+{extend name='index:base'}
+{block name='main'}
+  <section class="title-center">
+    <div class="row" style="padding:25px 30px;">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+
+        {foreach name='orders' item='vo'}
+        <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img height="175px" class="media-object" src="{$Think.Config.WEBSER}/{$vo['cover']}" alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">{$vo['orderid']}</h4>
+          <p>{$vo['name']}</p>
+          <p style="color:red;font-size:20px;">order fee:${$vo['fee']}</p>
+          <p>{$vo['addtime']|date="Y-m-d H:i:s",###}</p>
+          <p>status:<span class="label label-success">paued</span></p>
+          <span></span>
+        </div>
+        <p>yuantong:214214142423423343</p>
+      </div>
+      <hr>
+
+      {/foreach}
+      </div>
+
+      <div class="col-md-6">
+
+        {if condition="$page eq 1"}
+        <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder')}?p=1">1st page</a>
+        {else/}
+          <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$page-1}">prev</a>
+        {/if}
+      </div>
+    <div class="col-md-6">
+      {if condition="$page eq $maxpage"}
+        <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$maxpage}">Final</a>
+      {else/}
+      <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$page+1}">Next page</a>
+      {/if}
+    </div>
+
+
+
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+{/block}
