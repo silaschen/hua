@@ -64,7 +64,7 @@
                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="loginarea">
                           {if condition="$Think.Session.login_uid neq ''"}
 
-                                  <a href="{:url('index/index/logout')}" class="btn extra-color text-uppercase pull-right">({$Think.Session.login_nick})登出</a>
+                                  <a href="javascript:logout()" class="btn extra-color text-uppercase pull-right">({$Think.Session.login_nick})登出</a>
                                   <a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的订单</a>
 
                           {else/}
@@ -483,33 +483,33 @@
                 return;
               }
               $.post("{:url('index/index/login')}",{'account':account,'password':password},function(data){
-
-
                   alert(data.msg);
                   if(data.code===1){
-
-
                         $("#loginmod").modal('hide');
                         var succ = `<a href="{:url('index/index/logout')}" class="btn extra-color text-uppercase pull-right">登出</a><a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-left:10px;">我的订单</a>`;
                             $("#loginarea").html(succ);
 
-
-
                   }
-
-
-
-
 
               },'JSON');
 
-
-
-
-
-
           }
 
+
+
+      function logout(){
+        $.post("{:url('index/index/logout')}",function(ret){
+
+              if(ret.code===1){
+                location.href="{:url('index/index/index')}";
+              }
+
+
+        },'JSON');
+
+
+
+      }
         </script>
     </body>
 </html>
