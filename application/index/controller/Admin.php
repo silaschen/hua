@@ -232,6 +232,9 @@ public function replyques(){
 	}
 }
 
+public function index(){
+	return $this->fetch('index');
+}
 
 
 	public function order2list(){
