@@ -16,7 +16,7 @@ class Index extends Common
       $flower = Db::query("select * from flower  where type=1 order by id desc limit 4");
       $vege = Db::query("select * from flower where type=2 order by id desc limit 4");
       $data = array_merge($flower,$vege);
-      shuffle($data);
+      // shuffle($data);
       $this->assign('flower',$data);
 
       //latest 6 news blog
@@ -83,7 +83,10 @@ class Index extends Common
       $account = \think\Request::instance()->post('account');
   		$password =\think\Request::instance()->post('password');
   		$pwd = md5($password);
-  		$user = Db::query("select * from user where password='$pwd' OR email='$account' OR phone='$account'");
+      $sql = "select * from user where password='{$pwd}' AND (email='{$account}' OR phone='{$account}')";
+      // var_dump($sql);exit;
+  		$user = Db::query($sql);
+
   		if($user){
   			$this->SetUserLogin($user);
   			exit(json_encode(['code'=>1,'nickname'=>$user[0]['nickname'],'msg'=>'success']));
@@ -109,8 +112,10 @@ class Index extends Common
 	*/
 	public function buy(){
 		$id = input('id');
+    $type = input('type');
 		$item = Db::query("select * from flower where id=$id");
 		$this->assign('item',$item[0]);
+    $this->assign('type',$type);
 		$this->assign('webserver',\Think\Config::get('WEBSERVER')."/");
 		return $this->fetch('buy');
 	}
@@ -123,18 +128,32 @@ class Index extends Common
 
 			$data = Request::instance()->post();
 			$data['addtime'] = time();
+
       $data['uid'] = \think\Session::get('login_uid');
       if(!$data['uid']) exit(json_encode(['code'=>-8,'msg'=>'you need to login']));
       $price = Db::query(sprintf("select price from flower where id=%d",$data['flowerid']))[0]['price'];
       //total fee
-      $data['fee'] = $data['num']*$price;
-      $data['status'] = 1;//no pay status
+      $fee1 = $data['num']*$price;
+      $data['status'] = 2;//no pay status
       $data['orderid'] = md5(time().$data['uid'].$data['fee']);
-      $ret = Db::name('orders')->insert($data);
+      if(intval($data['type']) === 1){
+        $data['fee'] = $fee1;
+        unset($data['type']);
+
+        $ret = Db::name('orders')->insert($data);
+
+      }else if(intval($data['type']) === 2){
+        $data['fee'] = 20*$data['time']+$fee1;
+        $data['expire'] = strtotime("+".$data['time']." month");
+        unset($data['type']);
+        $ret = Db::name('orders2')->insert($data);
+
+      }
+
       if($ret){
         exit(json_encode(['code'=>1,'msg'=>'order successfully','fee'=>$data['fee']]));
       }else{
-        exit(josn_encode(['code'=>-10]));
+        exit(json_encode(['code'=>-10]));
       }
 	}
 
@@ -145,16 +164,51 @@ class Index extends Common
     $page = input('p')?input('p'):1;
     $maxcount = Db::query(sprintf("select count(*) as total from orders where uid=%d",\think\Session::get('login_uid')))[0]['total'];
     $maxpage = ceil($maxcount/\think\Config::get('PAGE_SIZE'));
-    $page = $page>$maxpage?$maxpage:$page;
+    $page = $page>$maxpage?($maxpage==0?1:$maxcount):$page;
     $sql = sprintf("SELECT o.id,o.orderid,o.status,o.expressinfo,o.recieve,f.name,f.price,
       o.fee,o.addtime,f.cover FROM orders as o LEFT JOIN flower as f ON o.flowerid=f.id
+    WHERE o.uid=%d order by id desc limit %d,%d",\think\Session::get('login_uid'),($page-1)*(\think\Config::get('PAGE_SIZE')),\think\Config::get('PAGE_SIZE'));
+    // var_dump($sql);exit;
+    $order = Db::query($sql);
+    if(!empty($order)){
+
+      foreach ($order as $key => $value) {
+
+          $order[$key]['expressinfo'] = json_decode($value['expressinfo'],true);
+          $order[$key]['expressinfo']['name'] = urldecode($order[$key]['expressinfo']['name']);
+
+      }
+    }
+    //pass the list to view
+    $this->assign('orders',$order);
+    $this->assign(array('page'=>$page,'maxpage'=>$maxpage));
+    // var_dump($orders);
+    return $this->fetch('myorder',$order);
+  }
+
+  //my order
+  public function myorder2(){
+    //join flower to select my order list
+    $page = input('p')?input('p'):1;
+    $maxcount = Db::query(sprintf("select count(*) as total from orders2 where uid=%d",\think\Session::get('login_uid')))[0]['total'];
+    $maxpage = ceil($maxcount/\think\Config::get('PAGE_SIZE'));
+      $page = $page>$maxpage?($maxpage==0?1:$maxcount):$page;
+    $sql = sprintf("SELECT o.id,o.orderid,o.status,f.name,o.expire,
+      o.fee,o.addtime,o.time,f.cover FROM orders2 as o LEFT JOIN flower as f ON o.flowerid=f.id
     WHERE o.uid=%d order by id desc limit %d,%d",\think\Session::get('login_uid'),($page-1)*(\think\Config::get('PAGE_SIZE')),\think\Config::get('PAGE_SIZE'));
     // var_dump($sql);exit;
     $order = Db::query($sql);
     //pass the list to view
     $this->assign('orders',$order);
     $this->assign(array('page'=>$page,'maxpage'=>$maxpage));
-    return $this->fetch('myorder',$order);
+    return $this->fetch('myorder2',$order);
+  }
+
+  public function flowerstat(){
+    $id = input('id');
+    $detail = Db::query('select * from orders2 where id=$id')[0];
+    $albums = json_decode($detail['album'],true);
+    return $this->fetch('flowerstat',['stat'=>$detail]);
   }
 
 
@@ -217,8 +271,35 @@ class Index extends Common
 		\think\Session::set('login_nick',null);
 		exit(json_encode(array('code'=>1)));
 
-
 	}
+
+
+  public function ask(){
+    $data = \think\Request::instance()->post();
+    $data['addtime'] = time();
+    $data['uid'] = \think\Session::get('login_uid');
+    if(!$data['uid']) exit(json_encode(['code'=>0]));
+    Db::name('questions')->insert($data);
+    exit(json_encode(['code'=>1]));
+  }
+
+  public function myask(){
+    $question = Db::query(sprintf("SELECT * from questions WHERE uid=%d",\think\Session::get('login_uid')));
+    return $this->fetch('myask',['ques'=>$question]);
+  }
+
+  public function stat(){
+    $id = input('id');
+    $detail = Db::query(sprintf("select stat,id,expire from orders2 where id=%d",$id))[0];
+    $info = json_decode($detail['stat'],true);
+
+    $expire = date("Y-m-d",$detail['expire']);
+    if(empty($info)) $this->assign('nostat',1);
+    $info['text'] = urldecode($info['text']);
+    $this->assign('info',$info);
+    $this->assign('expire',$expire);
+    return $this->fetch('stat');
+  }
 
 
 }

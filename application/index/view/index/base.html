@@ -17,7 +17,9 @@
         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/color4.css" title="color4" media="all" />
         <script src="{$Think.Config.WEBSERVER}/public/hua/js/jquery-1.11.2.min.js"></script>
         <script src="{$Think.Config.WEBSERVER}/public/hua/js/bootstrap.min.js"></script>
-
+        <style media="screen">
+          .form-control{border-color: #d0c9c9;}
+        </style>
     </head>
     <body data-scrolling-animations="true">
         <div class="b-page">
@@ -48,7 +50,7 @@
             <header id="header">
                 <div class="header-top">
                     <div class="wrapper">
-                        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <div class="header-info">
                                 <div class="description-header">
                                     欢迎来到花卉蔬菜选购网
@@ -61,11 +63,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12" id="loginarea">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12" id="loginarea">
                           {if condition="$Think.Session.login_uid neq ''"}
 
                                   <a href="javascript:logout()" class="btn extra-color text-uppercase pull-right">({$Think.Session.login_nick})登出</a>
                                   <a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的订单</a>
+                                    <a href="{:url('index/index/myask')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的咨询</a>
+<a href="{:url('index/index/myorder2')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的托养</a>
 
                           {else/}
                             <a href="javascript:$('#loginmod').modal()"  class="btn extra-color text-uppercase pull-right" style="margin-left:10px;">登录</a>
@@ -84,13 +88,13 @@
                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 cart-block-r">
                             <div class="cart-block pull-right">
                                 <i class="flaticon-shopping-bag1"></i>
-                                <div class="cart-box">
+                                <!-- <div class="cart-box">
                                     <div class="cart-price pull-right">
                                         <span class="color-primary text-uppercase">购物车:</span>
                                         <span class="price">￥1000.00</span>
                                         <div class="items-cart">1 ITEMS</div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
 
@@ -108,7 +112,7 @@
                                         </form>
                                         <a class="iconSearch" href="#">
                                             <span class="ef icon_search"></span>                                        </a>                                    </li>
-                                    <li><a class="#" href="{:url('index/index/index')}">Home</a></li>
+                                    <li><a class="#" href="{:url('index/index/index')}">主页</a></li>
 
                                     <li><a class="#" href="{:url('index/index/store')}">在线选购</a></li>
                                     <li><a class="#" href="{:url('index/index/news')}">新闻</a></li>
@@ -486,7 +490,10 @@
                   alert(data.msg);
                   if(data.code===1){
                         $("#loginmod").modal('hide');
-                        var succ = `<a href="{:url('index/index/logout')}" class="btn extra-color text-uppercase pull-right">登出</a><a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-left:10px;">我的订单</a>`;
+                        var succ = `  <a href="javascript:logout()" class="btn extra-color text-uppercase pull-right">({$Think.Session.login_nick})登出</a>
+                          <a href="{:url('index/index/myorder')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的订单</a>
+                            <a href="{:url('index/index/myask')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的咨询</a>
+<a href="{:url('index/index/myorder2')}"  class="btn extra-color text-uppercase pull-right" style="margin-right:10px;">我的托养</a>`;
                             $("#loginarea").html(succ);
 
                   }
