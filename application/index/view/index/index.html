@@ -102,7 +102,9 @@
 						<div class="product-desc">Sale off</div>
 						<div class="row-pr">
 							<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-								<a class="add-to-cart pull-right" href="{:url('index/index/buy',array('id'=>$vo['id']))}"><span>Add to Cart</span></a>
+								{if condition="$vo['type'] eq 1"}
+<a class="add-to-cart pull-left" href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>2))}"><span>申请代养</span></a>{/if}
+								<a class="add-to-cart pull-right" href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>1))}"><span>立即购买</span></a>
 							</div>
 							<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 								<div class="price">￥{$vo['price']}</div>
@@ -117,7 +119,6 @@
 									{for start="0" end="5-$vo['level']" name='k'}
 
 											<span class="ef icon_star empty"></span>
-
 
 									{/for}
 

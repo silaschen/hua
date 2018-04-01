@@ -8,22 +8,7 @@
 
 							<div class="settings-block wow bounceInDown center">
 								<div class="col-lg-10 col-md-10 col-sm-9 col-xs-12">
-									<div class="select-block">
-										<span class="select-title">Sort By:</span>
-										<select name="#" id="sort-product">
-											<option value="Default Sorting">Default Sorting</option>
-											<option value="Default Sorting">Default Sorting</option>
-											<option value="Default Sorting">Default Sorting</option>
-										</select>
-									</div>
-									<div class="select-block">
-										<span class="select-title">Show Items:</span>
-										<select name="#" id="show-items">
-											<option value="Default Sorting">9 Per Page</option>
-											<option value="Default Sorting">12 Per Page</option>
-											<option value="Default Sorting">24 Per Page</option>
-										</select>
-									</div>
+						<p>买花卉，送SSR</p>
 								</div>
 								<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
 									<ul id="type-of-display" class="pull-right">
@@ -57,7 +42,9 @@
 												<div class="product-desc">Sale off</div>
 												<div class="row-pr">
 													<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-														<a href="{:url('index/index/buy',array('id'=>$vo['id']))}" class="add-to-cart pull-right"><span>Add to Cart</span></a>
+														{if condition="$vo['type'] eq 1"}
+						<a class="add-to-cart pull-left" href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>2))}"><span>申请代养</span></a>{/if}
+														<a href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>1))}" class="add-to-cart pull-right"><span>买买买</span></a>
 													</div>
 													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 														<div class="price">￥{$vo['price']}</div>
