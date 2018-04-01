@@ -4,8 +4,7 @@
   <!-- 搜索 -->
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">视频列表</h3>
-      <a href="{:url('Sys/addvideo')}" class='btn btn-success btn-xs pull-right'>添加视频</a>
+      <h3 class="box-title">代养列表</h3>
     </div>
     <div class="box-body">
       <form method="GET" action="{:url('Sys/artlist')}" id='form'>
@@ -30,13 +29,13 @@
         <tbody>
           <tr>
             <th>ID</th>
-            <th>cover</th>
-            <th>nickname</th>
-            <th>num</th>
-            <th>fee</th>
-            <th>time</th>
-            <th>status</th>
-            <th>时间</th>
+            <th>商品</th>
+            <th>用户</th>
+            <th>数量</th>
+            <th>总费用</th>
+            <th>托管时长</th>
+            <th>状态</th>
+            <th>下单时间</th>
             <th>操作</th>
           </tr>
           {volist name="list" id="vo"}
@@ -47,8 +46,8 @@
             <td>{$vo['num']}</td>
             <td><span class="label label-success">${$vo['fee']}</span></td>
             <td><span class="label label-warning">{$vo['time']}month</span></td>
-            <td>{if condition="$vo['status'] eq 1"}<span class="label label-warning">unpay</span>
-              {elseif condition="$vo['status'] eq 2"}<span class="label label-success">loving</span>
+            <td>{if condition="$vo['status'] eq 1"}<span class="label label-warning">未支付</span>
+              {elseif condition="$vo['status'] eq 2"}<span class="label label-success">托养中</span>
               {/if}
             </td>
             <td>{$vo.addtime|date="Y-m-d H:i",###}</td>
@@ -57,7 +56,7 @@
 
 
               {if condition="$vo['status'] eq 2"}
-                <a href="javascript:updatestat({$vo['id']})" class="btn btn-success">update stat</a>
+                <a href="javascript:updatestat({$vo['id']})" class="btn btn-success">更新花卉状态</a>
 
                   <!-- <a href="javascript:;" class="disabled btn btn-default">replied</a> -->
                 {/if}

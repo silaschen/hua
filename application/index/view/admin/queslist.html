@@ -3,8 +3,7 @@
   <!-- 搜索 -->
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">视频列表</h3>
-      <a href="{:url('Sys/addvideo')}" class='btn btn-success btn-xs pull-right'>添加视频</a>
+      <h3 class="box-title">咨询列表</h3>
     </div>
     <div class="box-body">
       <form method="GET" action="{:url('Sys/artlist')}" id='form'>
@@ -42,7 +41,7 @@
 
             <td>
               {if condition="$vo['answer'] eq ''"}
-                <a href="javascript:reply('{$vo['id']}','{$vo['content']}')" class="btn btn-success">reply</a>
+                <a href="javascript:reply('{$vo['id']}','{$vo['content']}')" class="btn btn-success">回复</a>
                 {else/}
                   <a href="javascript:;" class="disabled btn btn-default">replied</a>
                 {/if}
