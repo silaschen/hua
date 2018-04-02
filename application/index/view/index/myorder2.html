@@ -20,6 +20,7 @@
           <p>{$vo['addtime']|date="Y-m-d H:i:s",###}</p>
           <p>status:<span class="label label-success">paued</span></p>
           <a class="btn btn-warning" href="{:url('index/index/stat',array('id'=>$vo['id']))}"  style="padding:5px 10px">view detail</a>
+            <a class="btn btn-warning" href="javascript:ordermore({$vo['id']})"  style="padding:5px 10px">order more</a>
         </div>
       </div>
       <hr>
@@ -38,16 +39,16 @@
       <div class="col-md-6">
 {if condition="$orders neq NULL"}
         {if condition="$page eq 1"}
-        <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder')}?p=1">1st page</a>
+        <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder2')}?p=1">1st page</a>
         {else/}
-          <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$page-1}">prev</a>
+          <a class="btn extra-color text-uppercase pull-right" style="padding:10px 5px" href="{:url('index/index/myorder2')}?p={$page-1}">prev</a>
         {/if}
       </div>
     <div class="col-md-6">
       {if condition="$page eq $maxpage"}
-        <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$maxpage}">Final</a>
+        <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder2')}?p={$maxpage}">Final</a>
       {else/}
-      <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder')}?p={$page+1}">Next page</a>
+      <a class="btn extra-color text-uppercase" style="padding:10px 5px" href="{:url('index/index/myorder2')}?p={$page+1}">Next page</a>
       {/if}
 
       {/if}
@@ -59,40 +60,41 @@
   </section>
 
 
-  <div class="modal fade" tabindex="-1" role="dialog" id="ask">
+  <div class="modal fade" tabindex="-1" role="dialog" id="helpmodal">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">please tell us what you want</h4>
+          <h4 class="modal-title">please choose the serve</h4>
         </div>
-        <div class="modal-body">
+        <div class="modal-body" id="con">
 
 
-            <form class="form" id="askform">
+            <form class="form" id="help">
               <input type="hidden" name="oid" value="">
-                <div class="form-group">
 
-                    <label for="">question title</label>
-                    <input style="border-color: #d0c9c9;" class="form-control" type="text" name="title" value="">
-                </div>
+              <strong style="color:red;">代养费￥20/mon</strong>
+              <div class="form-group">
 
+                  <label for="">请选择代养时长</label>
+                  <select class="form-control" name="time">
+                    <option value="1">one month</option>
+                    <option value="2">two month</option>
+                    <option value="3">three month</option>
+                    <option value="4">four month</option>
+                    <option value="5">five month</option>
+                    <option value="6">six month</option>
+                    <option value="12">one year</option>
+                  </select>
 
-                <div class="form-group">
-
-                  <textarea name="content" class="form-control" rows="8" cols="80"></textarea>
-
-                </div>
-
-
-
+              </div>
             </form>
         </div>
 
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" onclick="makeask()" class="btn btn-primary">Submit</button>
+          <button type="button" onclick="suborder()" class="btn btn-primary">Submit</button>
         </div>
 
 
@@ -101,6 +103,26 @@
     </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
 
+
+
+
+  <div class="modal fade" tabindex="-1" role="dialog" id="pay">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">扫一扫，支付</h4>
+        </div>
+        <div class="modal-body">
+
+            <h2>此订单需支付 <span id="orderpay"></span></h2>
+            <img src="{$Think.Config.WEBSERVER}/public/hua/img/pay.png" alt="">
+
+        </div>
+
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
 <script type="text/javascript">
 function Ask(id){
@@ -122,6 +144,42 @@ function makeask(){
 
 
   },'JSON');
+
+
+
+}
+
+
+function ordermore(id){
+
+  $("input[name='oid']").val(id);
+  $("#helpmodal").modal();
+}
+
+
+function suborder(){
+    var time=$("select[name='time']").val();
+    var id = $("input[name='oid']").val();
+    $.post("{:url('index/index/ordermore')}",{'id':id,'time':time},function(data){
+
+            alert(data.msg);
+            if(data.code===1){
+              $("#orderpay").html(data.fee);
+              $("#pay").modal();
+
+            }
+
+
+    },'JSON');
+
+
+
+}
+
+
+function counttotal(){
+  var time=$("input[name='time']").val();
+  var fee = time*20;
 
 
 
