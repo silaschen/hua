@@ -302,4 +302,29 @@ class Index extends Common
   }
 
 
+
+  public function recieve(){
+    $id = input('id');
+    $sql = Db::execute("update orders set status=4 where id=$id");
+    if($sql){
+      exit(json_encode(['code'=>1,'msg'=>'done!']));
+    }
+  }
+
+
+  public function ordermore(){
+    $id  = input('id');
+    $time = input('time');
+    $expire = $time*30*24*60*60;
+
+    $data = Db::query("select * from orders2 where id=$id")[0];
+      $fee = $time*20+$data['fee'];
+    $sql = sprintf("update orders2 set expire=%d,fee=%d where id=%d",$expire+$data['expire'],$fee,$id);
+
+    Db::execute($sql);
+    exit(json_encode(['code'=>1,'msg'=>'successfully','fee'=>$time*20]));
+
+
+  }
+
 }

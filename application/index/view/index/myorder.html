@@ -20,11 +20,12 @@
           <p>订单状态:{if condition="$vo['status'] eq 1"}
             <span class="label label-success">no pay</span>{elseif condition="$vo['status'] eq 2"}
           <span class="label label-info">waiting post</span>{elseif condition="$vo['status'] eq 3"}
-          <span class="label label-waning">posting</span>{elseif condition="$vo['status'] eq 4"}
+          <span class="label label-warning">posting</span>{elseif condition="$vo['status'] eq 4"}
               <span class="label label-success">done</span>
           {/if}
         </p>
           <span class="btn btn-warning" onclick="Ask({$vo['id']})" style="padding:8px 15px">咨询问题</span>
+          {if condition="$vo['status'] eq 3"}<span class="btn btn-warning" onclick="recieve({$vo['id']})" style="padding:8px 15px">确认收货</span>{/if}
         </div>
         {if condition="$vo['expressinfo'] neq ''"}
         <p>{$vo['expressinfo']['name']}:{$vo['expressinfo']['id']}</p>
@@ -133,6 +134,25 @@ function makeask(){
 
 
 
+}
+
+function recieve(id){
+
+  if(confirm("Are you sure to recieve your post?") === true){
+
+    $.post("{:url('index/index/recieve')}",{'id':id},function(data){
+
+          if(data.code === 1){
+
+            alert(data.msg);
+            location.reload();
+
+          }
+
+
+
+    },'JSON')
+  }
 }
 </script>
 
