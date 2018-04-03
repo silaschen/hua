@@ -212,7 +212,7 @@ public function replyques(){
 		$p = input('p')?input('p'):1;
 		$word = input('word');
 		$map = array();
-		if($word) $map['o.orderid|u.name'] = array('like','%'.$word.'%');
+		if($word) $map['o.orderid|u.nickname'] = array('like','%'.$word.'%');
 		$list = Db::name('orders')
 		->alias('o')
 		->join('flower f','o.flowerid=f.id','left')
@@ -246,7 +246,7 @@ public function index(){
 		$p = input('p')?input('p'):1;
 		$word = input('word');
 		$map = array();
-		if($word) $map['o.orderid,u.name'] = array('like','%'.$word.'%');
+		if($word) $map['o.orderid|u.nickname'] = array('like','%'.$word.'%');
 		$list = Db::name('orders2')
 		->alias('o')
 		->join('flower f','o.flowerid=f.id','left')
