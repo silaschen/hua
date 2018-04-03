@@ -3,18 +3,18 @@
   <!-- 搜索 -->
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">vege列表</h3>
-      <a href="{:url('Admin/addflower')}" class='btn btn-success btn-xs pull-right'>添加vege</a>
+      <h3 class="box-title">蔬菜列表</h3>
+      <a href="{:url('Admin/addflower')}" class='btn btn-success btn-xs pull-right'>添加蔬菜</a>
     </div>
     <div class="box-body">
-      <form method="GET" action="{:url('Sys/artlist')}" id='form'>
+      <form method="GET" action="{:url('admin/vegelist')}" id='form'>
       <div class="row">
         <div class="col-xs-4 col-md-3">
           <div class="input-group">
             <input name="word" type='text' class='form-control' value="" placeholder='标题关键词搜索..'>
             <span class="input-group-addon" onclick="$('#form').submit();"><i class="fa fa-search"></i></span>
               {if condition="$_GET['word'] neq ''"}
-            <a title='清除条件' class="input-group-addon" href="{:url('Sys/artlist')}"><i class="fa fa-remove"></i></a>
+            <a title='清除条件' class="input-group-addon" href="{:url('admin/vagelist')}"><i class="fa fa-remove"></i></a>
             {/if}
           </div>
         </div>
