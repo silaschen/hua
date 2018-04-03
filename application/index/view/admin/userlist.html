@@ -7,14 +7,14 @@
      
     </div>
     <div class="box-body">
-      <form method="GET" action="" id='form'>
+      <form method="GET" action="{:url('index/admin/userlist')}" id='form'>
       <div class="row">
         <div class="col-xs-4 col-md-3">
           <div class="input-group">
-            <input name="word" type='text' class='form-control' placeholder='昵称关键词搜索..'>
+            <input name="word" value="{:$_GET['word']}" type='text' class='form-control' placeholder='昵称关键词搜索..'>
             <span class="input-group-addon" onclick="$('#form').submit();"><i class="fa fa-search"></i></span>
 
-            <a title='清除条件' class="input-group-addon" href=""><i class="fa fa-remove"></i></a>
+            <a title='清除条件' class="input-group-addon" href="{:url('index/admin/userlist')}"><i class="fa fa-remove"></i></a>
 
           </div>
         </div>
@@ -70,14 +70,14 @@
 <script type="text/javascript">
 function setstat(id,t){
   if(t == -1){
-    var r = confirm("确定删除该文章？");
+    var r = confirm("确定删除该用户？");
   }else if(t == 1){
-    var r = confirm("确定显示该文章？");
+    var r = confirm("确定显示该用户？");
   }else if(t == 0){
-    var r = confirm("确定隐藏该文章？");
+    var r = confirm("确定隐藏该用户？");
   }
   if(r == true){
-    $.post(location.href,{"id":id,"t":t},function(data){
+    $.post("{:url('index/admin/deluser')}",{"id":id},function(data){
       alert(data.msg);
       if(data.ret == 1) location.reload();
     },'JSON');

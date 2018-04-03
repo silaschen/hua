@@ -56,13 +56,13 @@ class Admin extends Common
 			$p = input('p')?input('p'):1;
 			$word = input('word');
 			$map = array();
-			if($word) $map['title'] = array('like','%'.$word.'%');
+			if($word) $map['name'] = array('like','%'.$word.'%');
 			$list = Db::name('user')->where($map)->paginate(10);//分页
 			$page = $list->render();
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
 			$this->assign('list',$list);
-			return $this->fetch('userlist',['title'=>'用户列表','eq'=>'用户管理']);
+			return $this->fetch('userlist',['title'=>'用户管理','eq'=>'用户管理']);
 	}
 
 
@@ -71,7 +71,7 @@ class Admin extends Common
 		$id = input('id');
 		$sql = "delete from user where id=$id";
 		Db::execute($sql);
-		exit(json_encode(['code'=>1]));
+		exit(json_encode(['code'=>1,'msg'=>'删除成功']));
 
 
 	}
@@ -85,7 +85,7 @@ public function addvege(){
 		$this->assign('info',$info);
 	}
 
-	return $this->fetch('addvege',['eq'=>'蔬菜管理','title'=>'add vage']);
+	return $this->fetch('addvege',['eq'=>'蔬菜管理','title'=>'添加蔬菜']);
 }
 
 
@@ -100,7 +100,7 @@ public function addvege(){
 				$info = Db::name('flower')->where(['id'=>$id])->find();
 				$this->assign('info',$info);
 			}
-			return $this->fetch('addflower',['title'=>'addflower','eq'=>'花卉管理']);
+			return $this->fetch('addflower',['title'=>'添加花卉','eq'=>'花卉管理']);
 		}else{
 			$data = Request::instance()->post();
 			if($data['id'] >0){
@@ -122,7 +122,7 @@ public function addvege(){
 		if(Request::instance()->isGet()){
 			$id = Request::instance()->param('id');
 			$info = Db::name('blog')->where(['id'=>$id])->find();
-			return $this->fetch('addblog',['title'=>'addblog','eq'=>2,'info'=>$info]);
+			return $this->fetch('addblog',['title'=>'新闻管理','eq'=>"新闻管理",'info'=>$info]);
 		}else{
 			$data = Request::instance()->post();
 			if($data['id'] >0){
@@ -142,17 +142,17 @@ public function addvege(){
 		public function bloglist(){
 			$this->CheckAdmin();
 		if(\think\Request::instance()->isGet()){
-			$this->title = ' 博客列表';
+			$this->title = '新闻列表';
 			$p = input('p')?input('p'):1;
 			$word = input('word');
 			$map = array();
 			if($word) $map['title'] = array('like','%'.$word.'%');
-			$list = Db::name('blog')->paginate(10);
+			$list = Db::name('blog')->where($map)->paginate(10);
 			$page = $list->render();
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
 			$this->assign('list',$list);
-			return $this->fetch('bloglist',['title'=>'博客列表','eq'=>2]);
+			return $this->fetch('bloglist',['title'=>'新闻列表','eq'=>'新闻管理']);
 		}else{
 			$id = input('id');
 			Db::name('blog')->where(['id'=>$id])->delete();
@@ -165,23 +165,24 @@ public function addvege(){
 		public function queslist(){
 		$this->CheckAdmin();
 		if(\think\Request::instance()->isGet()){
-			$this->title = 'ques列表';
+			$this->title = '咨询列表';
 			$p = input('p')?input('p'):1;
 			$word = input('word');
 			$map = array();
 			if($word) $map['q.title'] = array('like','%'.$word.'%');
 			$list = Db::name('questions')->alias('q')
 			->join('user u','q.uid=u.id','left')
+			->where($map)
 			->field("u.nickname,q.*")
 			->paginate(10);
 			$page = $list->render();
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
 			$this->assign('list',$list);
-			return $this->fetch('queslist',['title'=>'ques列表','eq'=>2]);
+			return $this->fetch('queslist',['title'=>'咨询列表','eq'=>'咨询列表']);
 		}else{
 			$id = input('id');
-			Db::name('blog')->where(['id'=>$id])->delete();
+			Db::name('questions')->where(['id'=>$id])->delete();
 			exit(json_encode(['ret'=>1,'msg'=>'删除成功']));
 		}
 	}
@@ -204,19 +205,19 @@ public function replyques(){
 }
 
 
-//博客列表
 	public function orderlist(){
 		$this->CheckAdmin();
 	if(\think\Request::instance()->isGet()){
-		$this->title = 'order列表';
+		$this->title = '订单列表';
 		$p = input('p')?input('p'):1;
 		$word = input('word');
 		$map = array();
-		if($word) $map['title'] = array('like','%'.$word.'%');
+		if($word) $map['o.orderid,u.name'] = array('like','%'.$word.'%');
 		$list = Db::name('orders')
 		->alias('o')
 		->join('flower f','o.flowerid=f.id','left')
 		->join('user u','u.id=o.uid','left')
+		->where($map)
 		->field("o.id,o.orderid,o.addtime,u.nickname,f.name,o.fee,o.num,f.cover,o.status")
 		->order('o.id desc')
 		->paginate(10);
@@ -224,7 +225,7 @@ public function replyques(){
 		$this->assign('page',$page);// 赋值分页输出
 		//分页跳转的时候保证查询条件
 		$this->assign('list',$list);
-		return $this->fetch('orderlist',['title'=>'order列表','eq'=>2]);
+		return $this->fetch('orderlist',['title'=>'订单列表','eq'=>'订单管理']);
 	}else{
 		$id = input('id');
 		Db::name('orders')->where(['id'=>$id])->delete();
@@ -233,6 +234,7 @@ public function replyques(){
 }
 
 public function index(){
+	$this->CheckAdmin();
 	return $this->fetch('index');
 }
 
@@ -240,15 +242,16 @@ public function index(){
 	public function order2list(){
 			$this->CheckAdmin();
 	if(\think\Request::instance()->isGet()){
-		$this->title = ' 博客列表';
+		$this->title = '代养列表';
 		$p = input('p')?input('p'):1;
 		$word = input('word');
 		$map = array();
-		if($word) $map['title'] = array('like','%'.$word.'%');
+		if($word) $map['o.orderid,u.name'] = array('like','%'.$word.'%');
 		$list = Db::name('orders2')
 		->alias('o')
 		->join('flower f','o.flowerid=f.id','left')
 		->join('user u','u.id=o.uid','left')
+		->where($map)
 		->field("o.id,o.orderid,o.addtime,o.time,u.nickname,f.name,o.fee,o.num,f.cover,o.status")
 		->order('o.id desc')
 		->paginate(10);
@@ -256,7 +259,7 @@ public function index(){
 		$this->assign('page',$page);// 赋值分页输出
 		//分页跳转的时候保证查询条件
 		$this->assign('list',$list);
-		return $this->fetch('order2list',['title'=>'order列表','eq'=>2]);
+		return $this->fetch('order2list',['title'=>'代养列表','eq'=>'代养管理']);
 	}else{
 		$id = input('id');
 		Db::name('orders2')->where(['id'=>$id])->delete();
@@ -309,12 +312,13 @@ public function index(){
 		public function flowerlist(){
 		$this->CheckAdmin();
 		if(\think\Request::instance()->isGet()){
-			$this->title = ' flower列表';
+			$this->title = '花卉列表';
 			$p = input('p')?input('p'):1;
 			$word = input('word');
 			$map = array();
-			if($word) $map['name'] = array('like','%'.$word.'%');
-			$list = Db::name('flower')->where(['type'=>1])->paginate(10);
+			if($word) $map['title|name'] = array('like','%'.$word.'%');
+			$map['type']  =1;
+			$list = Db::name('flower')->where($map)->paginate(10);
 			$page = $list->render();
 			$this->assign('page',$page);// 赋值分页输出
 			//分页跳转的时候保证查询条件
@@ -332,17 +336,18 @@ public function index(){
 	public function vegelist(){
 	$this->CheckAdmin();
 	if(\think\Request::instance()->isGet()){
-		$this->title = ' vege列表';
+		$this->title = '蔬菜列表';
 		$p = input('p')?input('p'):1;
 		$word = input('word');
 		$map = array();
 		if($word) $map['name'] = array('like','%'.$word.'%');
-		$list = Db::name('flower')->where(array('type'=>2))->paginate(10);
+		$map['type'] = 2;
+		$list = Db::name('flower')->where($map)->paginate(10);
 		$page = $list->render();
 		$this->assign('page',$page);// 赋值分页输出
 		//分页跳转的时候保证查询条件
 		$this->assign('list',$list);
-		return $this->fetch('vegelist',['title'=>'蔬菜管理','eq'=>2]);
+		return $this->fetch('vegelist',['title'=>'蔬菜管理','eq'=>'蔬菜管理']);
 	}else{
 		$id = input('id');
 		Db::name('flower')->where(['id'=>$id])->delete();

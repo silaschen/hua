@@ -6,14 +6,14 @@
       <h3 class="box-title">咨询列表</h3>
     </div>
     <div class="box-body">
-      <form method="GET" action="{:url('Sys/artlist')}" id='form'>
+      <form method="GET" action="{:url('admin/queslist')}" id='form'>
       <div class="row">
         <div class="col-xs-4 col-md-3">
           <div class="input-group">
             <input name="word" type='text' class='form-control' value="" placeholder='标题关键词搜索..'>
             <span class="input-group-addon" onclick="$('#form').submit();"><i class="fa fa-search"></i></span>
               {if condition="$_GET['word'] neq ''"}
-            <a title='清除条件' class="input-group-addon" href="{:url('Sys/artlist')}"><i class="fa fa-remove"></i></a>
+            <a title='清除条件' class="input-group-addon" href="{:url('admin/queslist')}"><i class="fa fa-remove"></i></a>
             {/if}
           </div>
         </div>
@@ -28,9 +28,9 @@
         <tbody>
           <tr>
             <th>ID</th>
-            <th>title</th>
-            <th>user</th>
-            <th>addtime</th>
+            <th>问题</th>
+            <th>用户</th>
+            <th>咨询时间</th>
             <th>操作</th>
           </tr>
           {volist name="list" id="vo"}
@@ -43,7 +43,7 @@
               {if condition="$vo['answer'] eq ''"}
                 <a href="javascript:reply('{$vo['id']}','{$vo['content']}')" class="btn btn-success">回复</a>
                 {else/}
-                  <a href="javascript:;" class="disabled btn btn-default">replied</a>
+                  <a href="javascript:;" class="disabled btn btn-default">已回复</a>
                 {/if}
                 <a href="javascript:setstat({$vo.id},-1);" class="btn btn-danger">删除</a>
 
@@ -108,7 +108,7 @@
 <script type="text/javascript">
 function setstat(id,t){
   if(t == -1){
-    var r = confirm("确定删除该视频？");
+    var r = confirm("确定删除该咨询？");
   }
   if(r == true){
     $.post(location.href,{"id":id,"t":t},function(data){

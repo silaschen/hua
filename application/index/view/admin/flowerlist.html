@@ -3,18 +3,18 @@
   <!-- 搜索 -->
   <div class="box box-solid">
     <div class="box-header with-border">
-      <h3 class="box-title">flower列表</h3>
-      <a href="{:url('Admin/addflower')}" class='btn btn-success btn-xs pull-right'>添加flower</a>
+      <h3 class="box-title">花卉列表</h3>
+      <a href="{:url('Admin/addflower')}" class='btn btn-success btn-xs pull-right'>添加花卉</a>
     </div>
     <div class="box-body">
-      <form method="GET" action="{:url('Sys/artlist')}" id='form'>
+      <form method="GET" action="{:url('admin/flowerlist')}" id='form'>
       <div class="row">
         <div class="col-xs-4 col-md-3">
           <div class="input-group">
             <input name="word" type='text' class='form-control' value="" placeholder='标题关键词搜索..'>
             <span class="input-group-addon" onclick="$('#form').submit();"><i class="fa fa-search"></i></span>
               {if condition="$_GET['word'] neq ''"}
-            <a title='清除条件' class="input-group-addon" href="{:url('Sys/artlist')}"><i class="fa fa-remove"></i></a>
+            <a title='清除条件' class="input-group-addon" href="{:url('admin/flowerlist')}"><i class="fa fa-remove"></i></a>
             {/if}
           </div>
         </div>
@@ -29,13 +29,13 @@
         <tbody>
           <tr>
             <th>ID</th>
-            <th>cover</th>
-            <th>name</th>
-            <th>cate</th>
-            <th>price</th>
-            <th>level</th>
-            <th>stock</th>
-            <th>time</th>
+            <th>花朵图片</th>
+            <th>花卉名称</th>
+            <th>花卉分类</th>
+            <th>单价</th>
+            <th>星级</th>
+            <th>库存</th>
+            <th>入库时间</th>
             <th>操作</th>
           </tr>
           {volist name="list" id="vo"}
@@ -77,7 +77,7 @@
 <script type="text/javascript">
 function setstat(id,t){
   if(t == -1){
-    var r = confirm("确定删除该视频？");
+    var r = confirm("确定删除该花卉？");
   }
   if(r == true){
     $.post(location.href,{"id":id,"t":t},function(data){

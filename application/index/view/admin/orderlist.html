@@ -6,14 +6,14 @@
       <h3 class="box-title">订单列表</h3>
     </div>
     <div class="box-body">
-      <form method="GET" action="{:url('Sys/artlist')}" id='form'>
+      <form method="GET" action="{:url('admin/orderlist')}" id='form'>
       <div class="row">
         <div class="col-xs-4 col-md-3">
           <div class="input-group">
             <input name="word" type='text' class='form-control' value="" placeholder='标题关键词搜索..'>
             <span class="input-group-addon" onclick="$('#form').submit();"><i class="fa fa-search"></i></span>
               {if condition="$_GET['word'] neq ''"}
-            <a title='清除条件' class="input-group-addon" href="{:url('Sys/artlist')}"><i class="fa fa-remove"></i></a>
+            <a title='清除条件' class="input-group-addon" href="{:url('admin/orderlist')}"><i class="fa fa-remove"></i></a>
             {/if}
           </div>
         </div>
@@ -83,7 +83,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title">Fill post info</h4>
+          <h4 class="modal-title">填写发货信息</h4>
         </div>
         <div class="modal-body">
 
@@ -92,13 +92,13 @@
               <input type="hidden" name="oid" value="">
 
               <div class="form-group">
-                  <label for="">express company</label>
+                  <label for="">快递公司</label>
                   <input type="text" name="expressname"  class="form-control">
               </div>
 
 
               <div class="form-group">
-                  <label for="">express ID</label>
+                  <label for="">快递单号</label>
                   <input type="text" name="expressid"  class="form-control">
               </div>
 
@@ -109,7 +109,7 @@
 
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" onclick="makepost()" class="btn btn-primary">Submit</button>
+          <button type="button" onclick="makepost()" class="btn btn-primary">提交</button>
         </div>
 
 
@@ -124,7 +124,7 @@
 <script type="text/javascript">
 function setstat(id,t){
   if(t == -1){
-    var r = confirm("确定删除该视频？");
+    var r = confirm("确定删除该订单？");
   }
   if(r == true){
     $.post(location.href,{"id":id,"t":t},function(data){
