@@ -50,6 +50,20 @@ class Index extends Common
     }
 
 
+
+
+       //搜索
+    public function search(){
+
+        $key=input('keytext');
+        $data = Db::query(sprintf("select * from flower where name like '%%%s%%' and type=1",$key));
+        if(empty($data)) exit(json_encode(['code'=>-1]));
+        exit(json_encode(['code'=>1,'list'=>$data]));
+
+
+
+    }
+
   //注册,exit,josn_encode($param)
 	public function register(){
     if(\think\Request::instance()->isGet()){
