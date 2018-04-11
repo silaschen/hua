@@ -1,4 +1,3 @@
-# -*- codinss222ssg: UTF-8
 from websocket_server import WebsocketServer                                
  #当新的客户端连接时会提示                                                                        
 # Called for every client connecting (after handshake)                        
@@ -26,4 +25,3 @@ server.set_fn_new_client(new_client)
 server.set_fn_client_left(client_left)                                          
 server.set_fn_message_received(message_received)                                
 server.run_forever()
-1111111111111
