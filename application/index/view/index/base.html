@@ -554,7 +554,7 @@
         <script type="text/javascript">
 
 
-        var wsServer = 'ws://127.0.0.1:8006';
+        var wsServer = 'ws://127.0.0.1:9002';
         //调用websocket对象建立连接：
         //参数：ws/wss(加密)：//ip:port （字符串）
         var websocket = new WebSocket(wsServer)
@@ -599,15 +599,17 @@
 
                    function keyuphandle() {
                     clearTimeout(sktimer);
-                    var anima=`<i style='font-size:16em;' class="fa fa-spinner  fa-spin fa-pulse fa-fw"></i>
-<span class="sr-only">Loading...</span>`;
-                        $("#searchbox").html(anima);
+                    
                     sktimer = setTimeout(dosearch, 500);
                 }
 
                 function dosearch() {
                     
                     var k = $.trim($("#search").val());
+                    if(k == ''){$("#searchbox").html('没有相关结果');return false;}
+                    var anima=`<i style='font-size:16em;' class="fa fa-spinner  fa-spin fa-pulse fa-fw"></i>
+<span class="sr-only">Loading...</span>`;
+                        $("#searchbox").html(anima);
                     $.get("{:url('index/index/search')}?keytext="+k+"",function(data){
 
                             if(data.code===1){

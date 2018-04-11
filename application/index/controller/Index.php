@@ -18,7 +18,6 @@ class Index extends Common
       $data = array_merge($flower,$vege);
       // shuffle($data);
       $this->assign('flower',$data);
-
       //latest 6 news blog
       $blog = Db::query("select id,title,description,cover FROM blog order by id desc limit 6");
       $this->assign('news',$blog);
@@ -41,6 +40,7 @@ class Index extends Common
       if($name) $map['name'] = array('like',"%".$name."%");
       $flower = Db::name('flower')->where($map)->order('id desc')->paginate(9);
       $this->assign('flower',$flower);
+      $this->assign(['type'=>$map['type'],'cate'=>$map['cate']]);
     	return $this->fetch('shop');
     }
 

@@ -100,18 +100,20 @@
 								</div>
 								<div class="lb-content lb-content-accordion">
 									<div id="accordion" class="accordion-l-box">
+
+
 										<h3>
 											<span class="fi flaticon-plants5"></span>
 											<span class="title-accordion-menu-item">花卉分类</span>
 											<span class="ef accordion-icon"></span>
 										</h3>
 										<div>
-											<ul>
-												<li class="active"><a href="{:url('index/index/store',array('cate'=>1))}">多肉植物</a></li>
-												<li><a href="{:url('index/index/store',array('cate'=>2))}">观叶植物</a></li>
-												<li><a href="#">草木之物</a></li>
-												<li><a href="#">室内植物</a></li>
-												<li><a href="#">水培植物</a></li>
+											<ul id="fstat">
+												<li data-id='1'><a href="{:url('index/index/store',array('cate'=>1))}">多肉植物</a></li>
+												<li data-id='2'><a  href="{:url('index/index/store',array('cate'=>2))}">观叶植物</a></li>
+												<li data-id='3'><a href="{:url('index/index/store',array('cate'=>3))}">草木之物</a></li>
+												<li data-id='4'><a href="{:url('index/index/store',array('cate'=>4))}">室内植物</a></li>
+												<li data-id='5'><a href="{:url('index/index/store',array('cate'=>5))}">水培植物</a></li>
 											</ul>
 										</div>
 
@@ -122,7 +124,7 @@
 										</h3>
 										<div>
 											<ul>
-												<li class="active"><a href="{:url('index/index/store',array('type'=>2,'cate'=>1))}">蔬菜瓜果</a></li>
+												<li><a href="{:url('index/index/store',array('type'=>2,'cate'=>1))}">蔬菜瓜果</a></li>
 												<li><a href="{:url('index/index/store',array('type'=>2,'cate'=>2))}">Hedge Cutters</a></li>
 												<li><a href="#">Cultivators</a></li>
 												<li><a href="#">Ride-On Movers</a></li>
@@ -130,20 +132,7 @@
 											</ul>
 										</div>
 
-										<h3>
-											<span class="fi flaticon-plants5"></span>
-											<span class="title-accordion-menu-item">精选品种</span>
-											<span class="ef accordion-icon"></span>
-										</h3>
-										<div>
-											<ul>
-												<li class="active"><a href="#">Lawn Movers</a></li>
-												<li><a href="#">Hedge Cutters</a></li>
-												<li><a href="#">Cultivators</a></li>
-												<li><a href="#">Ride-On Movers</a></li>
-												<li><a href="#">Water Pumps</a></li>
-											</ul>
-										</div>
+									
 									</div>
 								</div>
 							</div>
@@ -209,6 +198,12 @@
 						</div>
 					</div>
 				</section>
+<script type="text/javascript">
+		var cid="{$cate}";
+		$("#fstat li[data-id='"+cid+"']").addClass('active');
+
+</script>
+
 
 
 {/block}
