@@ -1,4 +1,4 @@
-# -*- codinssssg: UTF-8
+# -*- codinss222ssg: UTF-8
 from websocket_server import WebsocketServer                                
  #当新的客户端连接时会提示                                                                        
 # Called for every client connecting (after handshake)                        
