@@ -1,4 +1,4 @@
-# -*- coding: UTF-8 -*-
+# -*- coding: UTF-8888 -*-
 from websocket_server import WebsocketServer                                
  #当新的客户端连接时会提示                                                                        
 # Called for every client connecting (after handshake)                        
