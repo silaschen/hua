@@ -70,6 +70,16 @@ class Index extends Common
       return $this->fetch('register');
     }else{
 			$data = \think\Request::instance()->post();//获取前端传过来的的值，数组
+      //字符格式验证
+      $pattern = "/^[A-Za-z]+(\w{3,})$/";
+      if(!preg_match($pattern, $data['nickname'])){
+        exit(json_encode(['code'=>-11,'msg'=>'用户名格式错误']));
+      }
+      if(!preg_match("/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/", $data['email'])){
+        exit(json_encode(['code'=>-12,'msg'=>'邮箱格式错误，想干嘛呢你！！！']));
+      }
+
+
 			$data['password'] = md5($data['password']);
 			$findsql = "SELECT * from user where nickname='{$data['nickname']}'";
 			//Db::query($sql)  执行sql语句
