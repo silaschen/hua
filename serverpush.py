@@ -59,9 +59,7 @@ def waitData(clientSocket,addressInfo):
                 thisclient.send(encode(data))
             except Exception as e:
                 clients.remove(thisclient)
-            
 
-# 等待新的连接
 while True:
     clientSocket, addressInfo = server.accept()
     print("new client getting...")
@@ -85,6 +83,7 @@ while True:
         clientSocket.send(bytes("Upgrade: websocket\r\n", encoding="utf8"))
         clientSocket.send(bytes(response_key_entity, encoding="utf8"))
         clientSocket.send(bytes("Connection: Upgrade\r\n\r\n", encoding="utf8"))
-        print("发送了握手包")
+        print("send shake data...")
+        #create new thread to oprate this client
         t = threading.Thread(target=waitData,args=(clientSocket,addressInfo))
         t.start()
