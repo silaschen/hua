@@ -279,6 +279,7 @@ public function index(){
 		$data['text'] = urlencode($data['text']);
 		$sql = sprintf("update orders2 SET stat='%s' WHERE id=%d",json_encode($data),$id);
 		$ret = Db::execute($sql);
+
 		if($ret){
 				exit(json_encode(['code'=>1,'msg'=>'success']));
 

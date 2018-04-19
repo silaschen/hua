@@ -15,12 +15,12 @@
         <div class="media-body">
           <h4 class="media-heading">{$vo['orderid']}</h4>
           <p>{$vo['name']}</p>
-          <p style="color:red;font-size:20px;">order fee:${$vo['fee']}</p>
-          <p>expire:{$vo['expire']|date="Y-m-d H:i:s",###}</p>
+          <p style="color:red;font-size:20px;">总金额:${$vo['fee']}</p>
+          <p>到期日:{$vo['expire']|date="Y-m-d H:i:s",###}</p>
           <p>{$vo['addtime']|date="Y-m-d H:i:s",###}</p>
-          <p>status:<span class="label label-success">paued</span></p>
-          <a class="btn btn-warning" href="{:url('index/index/stat',array('id'=>$vo['id']))}"  style="padding:5px 10px">view detail</a>
-            <a class="btn btn-warning" href="javascript:ordermore({$vo['id']})"  style="padding:5px 10px">order more</a>
+          <p>状态:<span class="label label-success">托养中</span></p>
+          <a class="btn btn-warning" href="{:url('index/index/stat',array('id'=>$vo['id']))}"  style="padding:5px 10px">查看花卉状态</a>
+            <a class="btn btn-warning" href="javascript:ordermore({$vo['id']})"  style="padding:5px 10px">续时</a>
         </div>
       </div>
       <hr>

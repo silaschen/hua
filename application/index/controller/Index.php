@@ -37,10 +37,15 @@ class Index extends Common
       $map = array();
       $map['cate'] = $cate?$cate:1;
       $map['type'] = $type ? $type:1;
+      if($type == 2 && $cate == 1){
+        $cate=21;
+      }else{
+        $cate = $map['cate'];
+      }
       if($name) $map['name'] = array('like',"%".$name."%");
       $flower = Db::name('flower')->where($map)->order('id desc')->paginate(9);
       $this->assign('flower',$flower);
-      $this->assign(['type'=>$map['type'],'cate'=>$map['cate']]);
+      $this->assign(['type'=>$map['type'],'cate'=>$cate]);
     	return $this->fetch('shop');
     }
 
@@ -126,7 +131,6 @@ class Index extends Common
 
 		\think\Session::set('login_uid',$user[0]['id']);
 		\think\Session::set('login_nick',$user[0]['nickname']);
-	//	\redisObj\redisTool::getRedis()->lpush('loginuser',$user['id']);
 	}
 
 
@@ -281,12 +285,6 @@ class Index extends Common
 
   }
 
-    public function sendm(){
-        $body = "please click the link below to finish check"."\n"."http://www.liondog.cn";
-        var_dump($this->sendmail('chensiwei1@outlook.com','CHECK account',$body));
-    }
-
-
 
 	//登出
 	public function logout(){
@@ -316,7 +314,6 @@ class Index extends Common
     $id = input('id');
     $detail = Db::query(sprintf("select stat,id,expire from orders2 where id=%d",$id))[0];
     $info = json_decode($detail['stat'],true);
-
     $expire = date("Y-m-d",$detail['expire']);
     if(empty($info)) $this->assign('nostat',1);
     $info['text'] = urldecode($info['text']);
