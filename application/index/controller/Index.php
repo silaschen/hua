@@ -13,13 +13,8 @@ class Index extends Common
 	*/
     public function index(){
     	//查询4个花卉，4个蔬菜，并随机排序，用于主页面展示
-      $flower = Db::query("select * from flower  where type=1 order by id desc limit 4");
-      $vege = Db::query("select * from flower where type=2 order by id desc limit 4");
-      $data = array_merge($flower,$vege);
-      // shuffle($data);
+      list($data,$blog) = \app\index\Data\Fetch::indexdata();
       $this->assign('flower',$data);
-      //latest 6 news blog
-      $blog = Db::query("select id,title,description,cover FROM blog order by id desc limit 6");
       $this->assign('news',$blog);
 		  return $this->fetch('index');
     }
@@ -84,19 +79,13 @@ class Index extends Common
         exit(json_encode(['code'=>-12,'msg'=>'邮箱格式错误，想干嘛呢你！！！']));
       }
 
-
 			$data['password'] = md5($data['password']);
-			$findsql = "SELECT * from user where nickname='{$data['nickname']}'";
-			//Db::query($sql)  执行sql语句
-			$status = Db::query($findsql);
+      $status = \app\index\Data\Fetch::finduserByName($data['nickname']);
 			if($status){
 				exit(json_encode(array('code'=>-10,'msg'=>'此昵称已被注册')));
 			}
-			//插入sql
-			$addsql=sprintf("insert into user(nickname,phone,email,password,addtime) VALUES ('%s','%s','%s','%s','%s')",$data['nickname'],$data['phone'],$data['email'],$data['password'],time());
-			//执行插入sql语句
-      // var_dump($addsql);exit;
-			$db = Db::execute($addsql);
+      $db = \app\index\Data\Fetch::register($data);
+			
 			if($db){
 				exit(json_encode(['code'=>1,'msg'=>'注册成功，请登录']));
 			}else{
@@ -112,10 +101,7 @@ class Index extends Common
       $account = \think\Request::instance()->post('account');
   		$password =\think\Request::instance()->post('password');
   		$pwd = md5($password);
-      $sql = "select * from user where password='{$pwd}' AND (email='{$account}' OR phone='{$account}')";
-      // var_dump($sql);exit;
-  		$user = Db::query($sql);
-
+      $user = \app\index\Data\Fetch::login($account,$pwd);
   		if($user){
   			$this->SetUserLogin($user);
   			exit(json_encode(['code'=>1,'nickname'=>$user[0]['nickname'],'msg'=>'success']));
@@ -159,27 +145,12 @@ class Index extends Common
 
       $data['uid'] = \think\Session::get('login_uid');
       if(!$data['uid']) exit(json_encode(['code'=>-8,'msg'=>'you need to login']));
-      $price = Db::query(sprintf("select price from flower where id=%d",$data['flowerid']))[0]['price'];
-      //total fee
-      $fee1 = $data['num']*$price;
-      $data['status'] = 2;//no pay status
-      $data['orderid'] = md5(time().$data['uid'].$data['fee']);
-      if(intval($data['type']) === 1){
-        $data['fee'] = $fee1;
-        unset($data['type']);
 
-        $ret = Db::name('orders')->insert($data);
 
-      }else if(intval($data['type']) === 2){
-        $data['fee'] = 20*$data['time']+$fee1;
-        $data['expire'] = strtotime("+".$data['time']." month");
-        unset($data['type']);
-        $ret = Db::name('orders2')->insert($data);
-
-      }
+      list($ret,$fee) = \app\index\Data\Fetch::makeorder($data);
 
       if($ret){
-        exit(json_encode(['code'=>1,'msg'=>'order successfully','fee'=>$data['fee']]));
+        exit(json_encode(['code'=>1,'msg'=>'order successfully','fee'=>$fee]));
       }else{
         exit(json_encode(['code'=>-10]));
       }
