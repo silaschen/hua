@@ -36,6 +36,7 @@ class Common extends Controller
 	}
 
 
+
 	/**
 	*send mail
 	*/

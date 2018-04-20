@@ -15,7 +15,7 @@
         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/color2.css" title="color2" media="all" />
         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/color3.css" title="color3" media="all" />
         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/color4.css" title="color4" media="all" />
-         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/css/awesome.css" title="color4" media="all" />
+         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/css/awesome.css"/>
         <script src="{$Think.Config.WEBSERVER}/public/hua/js/jquery-1.11.2.min.js"></script>
         <script src="{$Think.Config.WEBSERVER}/public/hua/js/bootstrap.min.js"></script>
         <style media="screen">
@@ -141,73 +141,6 @@
 
 
 
-
-
-
-
-<!--
-
-            <section class="color-bg box-tools-bg percent-blocks">
-                <div class="wrapper">
-                    <div class="row-1">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <ul class="our-info h1">
-                                <li class="chart" data-percent="1500">
-                                    <span class="ef icon_like_alt"></span>
-                                    <div class="number percent"></div>
-                                    <div class="text">Completed Projects</div>
-                                </li>
-                                <li class="chart" data-percent="358">
-                                    <span class="ef icon_group"></span>
-                                    <div class="number percent"></div>
-                                    <div class="text">Satisfied Customers</div>
-                                </li>
-                                <li class="chart" data-percent="26">
-                                    <span class="ef icon_house"></span>
-                                    <div class="number percent"></div>
-                                    <div class="text">Nationwide Branches</div>
-                                </li>
-                                <li class="chart" data-percent="2641">
-                                    <span class="ef icon_tools"></span>
-                                    <div class="number percent"></div>
-                                    <div class="text">Free Quotes Sent</div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="tooth-color-d"></div>
-            </section> -->
-<!--             <section class="content-foooter-2 no-line">
-                <div class="wrapper">
-                    <div class="row-1">
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wow rollIn">
-                            <div class="footer-2-title-box">
-                                <div class="fot-2-title">Follow Us</div>
-                                <div class="fot-2-title">On Social Media</div>
-                            </div>
-                            <div class="soc-box">
-                                <ul class="social-circle">
-                                    <li><a href="#"><span class="ef social_facebook_circle"></span></a></li>
-                                    <li><a href="#"><span class="ef social_twitter_circle"></span></a></li>
-                                    <li><a href="#"><span class="ef social_pinterest_circle"></span></a></li>
-                                    <li><a href="#"><span class="ef social_youtube_circle"></span></a></li>
-                                    <li><a href="#"><span class="ef social_instagram_circle"></span></a></li>
-                                    <li><a href="#"><span class="ef social_googleplus_circle"></span></a></li>
-                                </ul>
-                                <div class="followers">5k Followers</div>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wow lightSpeedIn">
-                            <div class="attractive-box">
-                                <div class="attractive">
-                                    Hire Us For Any Service & Get 25% Off Now &bull; Ends 10 April<div class="attractive-text left"><span class="att-text">Limited Time offer</span><span class="ef arrow_triangle-down"></span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>        -->
 
             <footer id="footer">
                 <div class="footer-blocks">
@@ -622,9 +555,8 @@
                     
                     var k = $.trim($("#search").val());
                     if(k == ''){$("#searchbox").html('没有相关结果');return false;}
-                    var anima=`<i style='font-size:16em;' class="fa fa-spinner  fa-spin fa-pulse fa-fw"></i>
-<span class="sr-only">Loading...</span>`;
-                        $("#searchbox").html(anima);
+
+                $("#searchbox").html('waitting for server...');
                     $.get("{:url('index/index/search')}?keytext="+k+"",function(data){
 
                             if(data.code===1){
