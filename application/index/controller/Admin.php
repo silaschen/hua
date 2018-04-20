@@ -235,6 +235,21 @@ public function replyques(){
 
 public function index(){
 	$this->CheckAdmin();
+		$i = 5;
+		for ($i=5; $i >= 0; $i--) {
+			$day =  date("Y-m-d",strtotime('-'.$i." day"));
+			$days[] = $day;
+			$data1[] = Db::query(sprintf("select count(*) as total FROM orders where addtime between '%s' and '%s'",
+			strtotime($day),strtotime($day)+86400))[0]['total'];
+			$data2[] = Db::query(sprintf("select count(*) as total FROM orders2 where addtime between '%s' and '%s'",
+			strtotime($day),strtotime($day)+86400))[0]['total'];
+		}
+
+
+		$this->assign(array(
+			'day'=>json_encode($days),'data1'=>json_encode($data1),'data2'=>json_encode($data2)
+		));
+
 	return $this->fetch('index');
 }
 

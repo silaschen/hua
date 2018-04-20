@@ -3,33 +3,40 @@
 
 
     <div class="container" style="padding-top:20px;padding-bottom:20px;">
+      <div class="row">
+        
 
       {foreach name='ques' item='vo'}
 
+
+          <div class="col-md-3 col-sm-12">
+            
 
       <div class="panel-group"  role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
         <div class="panel-heading" role="tab">
           <h4 class="panel-title">
             <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne{$vo['id']}" aria-expanded="true" aria-controls="collapseOne">
-              {$vo['title']}
+             question ID{$vo.id}&nbsp <span class="pull-right">{$vo['addtime']|date='Y-m-d H:i',###}</span>
             </a><br>
 
           </h4>
         </div>
         <div id="collapseOne{$vo['id']}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
           <div class="panel-body">
-            <p>your quest:{$vo['content']}  ps:u asked at {$vo['addtime']|date='Y-m-d H:i:s',###}</p>
-            <p style="color:#375448;font-size:20px;">{if condition="$vo['answer'] neq ''"}Admin have answered:{$vo['answer']}At {$vo['restime']|date="Y-m-d H:i",###}{else/}there is no any answer {/if}</p>
+            <p class="bg-danger">{$vo['title']}:{$vo['content']}</p>
+            <p style="color:red;font-size:20px;">{if condition="$vo['answer'] neq ''"}{$vo['answer']}At {$vo['restime']|date="Y-m-d H:i",###}{else/}there is no any answer {/if}</p>
           </div>
         </div>
         </div>
 
 
     </div>
+  </div>
 
 
 {/foreach}
+</div>
 </div>
 
 
