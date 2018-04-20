@@ -277,8 +277,10 @@ public function index(){
 
 		unset($data['oid']);
 		$data['text'] = urlencode($data['text']);
-		$sql = sprintf("update orders2 SET stat='%s' WHERE id=%d",json_encode($data),$id);
-		$ret = Db::execute($sql);
+		// $sql = sprintf("update orders2 SET stat='%s' WHERE id=%d",json_encode($data),$id);
+		// var_dump($sql);die;
+		// $ret = Db::execute($sql);
+		$ret = Db::name('orders2')->where(['id'=>$id])->setField(['stat'=>json_encode($data)]);
 
 		if($ret){
 				exit(json_encode(['code'=>1,'msg'=>'success']));
