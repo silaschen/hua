@@ -76,7 +76,7 @@ class Index extends Common
 				exit(json_encode(array('code'=>-10,'msg'=>'此昵称已被注册')));
 			}
       $db = Fetch::register($data);
-			
+
 			if($db){
 				exit(json_encode(['code'=>1,'msg'=>'注册成功，请登录']));
 			}else{
@@ -281,11 +281,23 @@ class Index extends Common
     $cart = Db::name('cart')->alias('c')
     ->join("flower f",'c.pid=f.id','LEFT')
     ->where(['c.uid'=>\think\Session::get('login_uid')])
-    ->field("c.uid,c.id,c.num,c.price,c.total,c.addtime,f.cover,f.name")
+    ->field("c.uid,c.id,c.num,c.price,c.total,c.pid,c.addtime,f.cover,f.name")
     ->select();
     $this->assign('cart',$cart);
     return $this->fetch('mycart');
   }
 
+
+  public function checktotal(){
+    $data = json_decode(file_get_contents("php://input"),true);
+    $sum = 0;
+    // var_dump($data);die;
+    for ($i=0; $i < count($data); $i++) {
+
+        $sum+=intval($data[$i]['price'])*intval($data[$i]['num']);
+    }
+
+    exit(json_encode(['code'=>1,'total'=>$sum]));
+  }
 
 }

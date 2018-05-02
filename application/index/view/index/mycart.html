@@ -4,7 +4,7 @@
 
     <div class="container" style="padding-top:20px;padding-bottom:20px;">
       <div class="row">
-        
+
 
       {foreach name='cart' item='vo'}
 
@@ -13,32 +13,78 @@
             <div class="col-md-3"><img class="img-responsive" src="{$Think.config.SERVER}/{$vo['cover']}"></div>
             <div class="col-md-6">
               <h3>{$vo['name']}<span style="color: red;font-size: 15px;">{$vo['price']}</span></h3>
-              <p>数量:<input class="form-control" name="num" value="{$vo['num']}"/></p>
+              <p>数量:<input class="form-control num" data-pid="{$vo['pid']}" data-id="{$vo['id']}" data-price="{$vo['price']}"  value="{$vo['num']}"/></p>
             </div>
           </div>
-          
 
-        
   {/foreach}
 
 </div>
 </div>
-<p class="bg-success">总价:9880 <span class="pull-right btn btn-suuccess">付款</span></p>
+<p style="font-size20px;" class="bg-success">总价:<span id="total">100</span> <span class="pull-right btn btn-suuccess" onclick="payFor()">付款</span></p>
 
 <script type="text/javascript">
-  
+
+  $(".num").bind('input propertychange',function(){
+        checkTotal();
+  });
+
+  function checkTotal(){
+    var data=[];
+    $(".num").each(function(k,obj){
+        var pid = $(obj).attr('data-pid');
+        var price = $(obj).attr('data-price');
+        var num = $(obj).val();
+        data.push({'pid':pid,'price':price,'num':num});
+    });
+
+    console.log(data);
+
+
+  $.ajax({
+    url:"{:url('index/index/checktotal')}",
+    data:JSON.stringify(data),
+    dataType:'JSON',
+    method:"POST",
+    success:function(ret){
+        if(ret.code===1){
+          $("#total").html(ret.total);
+        }
+
+    }
+  });
+
+}
+
+function payFor(){
+
+  var data=[];
+  $(".num").each(function(k,obj){
+      var pid = $(obj).attr('data-pid');
+      var price = $(obj).attr('data-price');
+      var num = $(obj).val();
+      data.push({'pid':pid,'price':price,'num':num});
+  });
+
+  console.log(data);
+
+
+$.ajax({
+  url:"{:url('index/index/checktotal')}",
+  data:JSON.stringify(data),
+  dataType:'JSON',
+  method:"POST",
+  success:function(ret){
+      if(ret.code===1){
+        $("#total").html(ret.total);
+      }
+
+  }
+});
 
 
 
 
-
-
-
-
-
-
-
-
-
+}
 </script>
 {/block}
