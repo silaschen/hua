@@ -1,0 +1,44 @@
+{extend name='index:base'/}
+{block name="main"}
+
+
+    <div class="container" style="padding-top:20px;padding-bottom:20px;">
+      <div class="row">
+        
+
+      {foreach name='cart' item='vo'}
+
+
+          <div class="col-md-12" style="margin-bottom: 10px;">
+            <div class="col-md-3"><img class="img-responsive" src="{$Think.config.SERVER}/{$vo['cover']}"></div>
+            <div class="col-md-6">
+              <h3>{$vo['name']}<span style="color: red;font-size: 15px;">{$vo['price']}</span></h3>
+              <p>数量:<input class="form-control" name="num" value="{$vo['num']}"/></p>
+            </div>
+          </div>
+          
+
+        
+  {/foreach}
+
+</div>
+</div>
+<p class="bg-success">总价:9880 <span class="pull-right btn btn-suuccess">付款</span></p>
+
+<script type="text/javascript">
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{/block}

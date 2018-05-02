@@ -3,6 +3,7 @@ namespace app\index\Data;
 use think\Db;
 /**
 * 数据提供,数据逻辑
+*均为静态方法，可直接调用
 */
 class Fetch
 {
@@ -74,15 +75,32 @@ class Fetch
 	      }
 
 	      return array($ret,$data['fee']);
-
 	}
 
 
+	public static function PageOrder($page){
+
+		return self::selectOrder('orders',$page,'o.id,o.orderid,o.status,o.expressinfo,o.recieve,f.name,f.price,
+			      o.fee,o.addtime,f.cover');
+	}
 
 
+	public static function PageOrder2($page){
+		
+	    return self::selectOrder('orders2',$page,'o.id,o.orderid,o.status,f.name,o.expire,
+	      o.fee,o.addtime,o.time,f.cover');
+	}
 
-	
 
+	private static function selectOrder($table,$page,$fileds=''){
+		$maxcount = Db::query(sprintf("select count(*) as total from %s where uid=%d",$table,\think\Session::get('login_uid')))[0]['total'];
+	    $maxpage = ceil($maxcount/\think\Config::get('PAGE_SIZE'));
+	    $page = $page>$maxpage?($maxpage==0?1:$maxcount):$page;
+		$sql = sprintf("SELECT %s FROM %s as o LEFT JOIN flower as f ON o.flowerid=f.id
+			    WHERE o.uid=%d order by id desc limit %d,%d",$fileds,$table,\think\Session::get('login_uid'),($page-1)*(\think\Config::get('PAGE_SIZE')),\think\Config::get('PAGE_SIZE'));
+		$order = Db::query($sql);
+		return array($order,$maxpage,$page);
+	}
 
 
 

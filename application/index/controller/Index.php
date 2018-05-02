@@ -253,5 +253,39 @@ class Index extends Common
     exit(json_encode(['code'=>1,'msg'=>'successfully','fee'=>$time*20]));
   }
 
+  public function myadd(){
+    $all = Db::query(sprintf("select * from user_address where uid=%d",\think\Session::get('login_uid')));
+    $this->assign('all',$all);
+    return $this->fetch('myadd');
+  }
+
+  public function addcart(){
+    $this->LoginStstus();
+    $pid = input('pid');
+    $flower = Db::query("select * from flower where id={$pid}")[0];
+    $data = array(
+        'uid'=>\think\Session::get('login_uid'),
+        'pid'=>$pid,
+        'price'=>$flower['price'],
+        'total'=>$flower['price']*1,
+        'addtime'=>time()
+    );
+
+    if(Db::name('cart')->insert($data)){
+      exit(json_encode(['code'=>1,'msg'=>'成功加入购物车']));
+    }
+
+  }
+
+  public function mycart(){
+    $cart = Db::name('cart')->alias('c')
+    ->join("flower f",'c.pid=f.id','LEFT')
+    ->where(['c.uid'=>\think\Session::get('login_uid')])
+    ->field("c.uid,c.id,c.num,c.price,c.total,c.addtime,f.cover,f.name")
+    ->select();
+    $this->assign('cart',$cart);
+    return $this->fetch('mycart');
+  }
+
 
 }
