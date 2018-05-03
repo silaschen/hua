@@ -106,13 +106,13 @@
                             <nav class="nav-container">
                                 <ul>
                                     <li class="search pull-right">
-                                
+
                                             <div class="form-group">
                                                 <label class="sr-only" for="searchQuery">Search...</label>
                                                 <input type="text" class="search-field" id="search" placeholder="Search...">
                                             </div>
-                                       
-                    
+
+
                                         <a class="iconSearch" href="#">
                                             <span class="ef icon_search"></span>                                        </a>                                    </li>
                                     <li><a class="#" href="{:url('index/index/index')}">主页</a></li>
@@ -133,7 +133,7 @@
 
 
         <div class="col-md-12 text-center" style="padding: 15px;z-index: 99999;" id="searchbox">
-                
+
 
 
 
@@ -430,9 +430,9 @@
         <h4 class="modal-title">添加地址</h4>
       </div>
       <div class="modal-body">
-            
+
                 <div class="input-group">
-                            
+
                             <span class="input-addon">收货人</span>
                             <input type="text" name="ad_recieve" class="form-control">
 
@@ -484,9 +484,9 @@
         <script src="{$Think.Config.WEBSERVER}/public/hua/js/func.js"></script>
 
         <script type="text/javascript">
-          
+
 </script>
-      
+
         <script type="text/javascript">
 
           function login(){
@@ -577,7 +577,7 @@
 
 
         <script type="text/javascript">
-            
+
 
                     $("#search").on('input propertychange',function(){
 
@@ -589,12 +589,12 @@
 
                    function keyuphandle() {
                     clearTimeout(sktimer);
-                    
+
                     sktimer = setTimeout(dosearch, 500);
                 }
 
                 function dosearch() {
-                    
+
                     var k = $.trim($("#search").val());
                     if(k == ''){$("#searchbox").html('没有相关结果');return false;}
 
@@ -620,13 +620,13 @@
                         <div class="product-desc">Sale off</div>
                         <div class="row-pr">
                             <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                                
+
 <a class="add-to-cart pull-left" href="{:url('index/index/buy')}?id=`+obj.id+`&type=2"><span>申请代养</span></a>
                                 <a class="add-to-cart pull-right" href="{:url('index/index/buy')}?id=`+obj.id+`&type=1"><span>立即购买</span></a>
                             </div>
                             <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                                 <div class="price">￥`+obj.price+`</div>
-                    
+
                             </div>
                         </div>
                     </div>
@@ -635,13 +635,12 @@
 
                             });
 
-        
+
                             // console.log(con);
-                           
-        
+                          
                             }else{
 
-                              con='没有相关结果';  
+                              con='没有相关结果';
                             }
 
                              $("#searchbox").html(con);

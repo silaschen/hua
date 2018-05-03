@@ -80,13 +80,73 @@ class Fetch
 
 	public static function PageOrder($page){
 
-		return self::selectOrder('orders',$page,'o.id,o.orderid,o.status,o.expressinfo,o.recieve,f.name,f.price,
-			      o.fee,o.addtime,f.cover');
+		$order1 = Db::name('orders')->alias("o")
+		->join('flower f','f.id=o.flowerid')
+		->where(['o.uid'=>\think\Session::get('login_uid')])
+		->field("f.cover,o.id,o.orderid,o.addtime,o.uid,o.expressinfo,o.phone,o.status")
+		->select();
+		$orders2 = Db::name('cart_order')->where(['uid'=>\think\Session::get('login_uid')])->select();
+		$order = array_merge($order1,$orders2 ? $orders2 :array());
+		$order_data  = self::arrangedata($order,'addtime');
+		self::DealFormat($order_data);
+		$maxcount = count($order_data);
+		$maxpage = ceil($maxcount/\think\Config::get('PAGE_SIZE'));
+		$page = $page>$maxpage?($maxpage==0?1:$maxcount):$page;
+		$ret = array_slice($order_data,($page-1)*\think\Config::get('PAGE_SIZE'),\think\Config::get('PAGE_SIZE'));
+		return array($ret,$maxpage,$page);
 	}
 
 
+	private static function DealFormat(&$order_data){
+
+
+				if(!empty($order_data)){
+
+
+					foreach ($order_data as $key => $value) {
+
+								if($value['data']){
+
+											foreach ($value['data'] as $k => $v) {
+														$flowerid = $order_data[$key]['data'][$k]['pid'];
+														$flower = Db::name('flower')->where(['id'=>$flowerid])->select();
+														$order_data[$key]['data'][$k]['flower'] = $flower;
+											}
+
+
+								}
+
+
+					}
+				}
+
+
+
+
+
+
+	}
+
+
+
+
+	private static function arrangedata($data,$attr=''){
+			$arr = [];
+			foreach ($data as $key => $value) {
+				$arr[$key] = $value[$attr];
+			}
+			arsort($arr);
+			foreach ($arr as $k => $v) {
+						$data[$k]['data'] = json_decode($data[$k]['data'] ,true);
+						$fetch[] = $data[$k];
+			}
+			return $fetch;
+	}
+
+
+
 	public static function PageOrder2($page){
-		
+
 	    return self::selectOrder('orders2',$page,'o.id,o.orderid,o.status,f.name,o.expire,
 	      o.fee,o.addtime,o.time,f.cover');
 	}

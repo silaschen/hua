@@ -288,7 +288,7 @@ class Index extends Common
   }
 
 
-  public function checktotal(){
+  public function checktotal($dump=false){
     $data = json_decode(file_get_contents("php://input"),true);
     $sum = 0;
     // var_dump($data);die;
@@ -296,8 +296,42 @@ class Index extends Common
 
         $sum+=intval($data[$i]['price'])*intval($data[$i]['num']);
     }
+    if($dump){
+      return $sum;
+    }else{
+          exit(json_encode(['code'=>1,'total'=>$sum]));
+    }
 
-    exit(json_encode(['code'=>1,'total'=>$sum]));
+  }
+
+  public function DoOrder(){
+    $money = $this->checktotal(true);
+    $data = json_decode(file_get_contents("php://input"),true);
+    $insert = [];
+    // var_dump($data);die;
+    for ($i=0; $i < count($data); $i++) {
+
+          array_push($insert,array('pid'=>$data[$i]['pid'],'num'=>$data[$i]['num'],'price'=>$data[$i]['price']));
+    }
+
+    $order = array(
+      'uid'=>\think\Session::get('login_uid'),
+      'addtime'=>time(),
+      'data'=>json_encode($insert),
+      'total'=>$money
+    );
+
+    $ret = Db::name('cart_order')->insert($order);
+    if($ret){
+        //删除购物车
+        // Db::name('cart')->where(['uid'=>$order['uid']])->delete();
+        exit(json_encode(['code'=>1,'msg'=>'下单成功，请支付']));
+
+
+    }else{
+      exit(json_encode(['code'=>0]));
+
+    }
   }
 
 }

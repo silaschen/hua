@@ -8,7 +8,6 @@
 
       {foreach name='cart' item='vo'}
 
-
           <div class="col-md-12" style="margin-bottom: 10px;">
             <div class="col-md-3"><img class="img-responsive" src="{$Think.config.SERVER}/{$vo['cover']}"></div>
             <div class="col-md-6">
@@ -57,7 +56,6 @@
 }
 
 function payFor(){
-
   var data=[];
   $(".num").each(function(k,obj){
       var pid = $(obj).attr('data-pid');
@@ -68,17 +66,16 @@ function payFor(){
 
   console.log(data);
 
-
 $.ajax({
-  url:"{:url('index/index/checktotal')}",
+  url:"{:url('index/index/DoOrder')}",
   data:JSON.stringify(data),
   dataType:'JSON',
   method:"POST",
   success:function(ret){
       if(ret.code===1){
-        $("#total").html(ret.total);
-      }
 
+
+      }
   }
 });
 

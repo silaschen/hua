@@ -6,6 +6,72 @@
 
 {if condition="$orders neq NULL"}
         {foreach name='orders' item='vo'}
+        {if condition="$vo.data neq ''"}
+
+        <div class="media">
+        <div class="media-left">
+          <a href="#">
+            <img height="175px" class="media-object" src="{$Think.Config.WEBSER}/{$vo['cover']}" alt="...">
+          </a>
+        </div>
+        <div class="media-body">
+          <h4 class="media-heading">{$vo['orderid']}</h4>
+          <p>{$vo['name']}</p>
+          <p style="color:red;font-size:20px;">订单总额:{$vo['total']}$</p>
+          <p>下单时间:{$vo['addtime']|date="Y-m-d H:i:s",###}</p>
+          <p>订单状态:{if condition="$vo['status'] eq 1"}
+          <span class="label label-success">no pay</span>{elseif condition="$vo['status'] eq 2"}
+          <span class="label label-info">waiting post</span>{elseif condition="$vo['status'] eq 3"}
+          <span class="label label-warning">posting</span>{elseif condition="$vo['status'] eq 4"}
+              <span class="label label-success">done</span>
+          {/if}
+        </p>
+          <span class="btn btn-warning" onclick="Ask({$vo['id']})" style="padding:8px 15px">咨询问题</span>
+          {if condition="$vo['status'] eq 3"}<span class="btn btn-warning" onclick="recieve({$vo['id']})" style="padding:8px 15px">确认收货</span>{/if}
+        </div>
+        {if condition="$vo['expressinfo'] neq ''"}
+        <p>{$vo['expressinfo']['name']}:{$vo['expressinfo']['id']}</p>
+        {/if}
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        {else/}
         <div class="media">
         <div class="media-left">
           <a href="#">
@@ -31,8 +97,9 @@
         <p>{$vo['expressinfo']['name']}:{$vo['expressinfo']['id']}</p>
         {/if}
       </div>
-      <hr>
 
+      {/if}
+          <hr>
       {/foreach}
         {else/}
 
