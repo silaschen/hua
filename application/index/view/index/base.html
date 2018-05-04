@@ -8,7 +8,6 @@
 
         <link href="{$Think.Config.WEBSERVER}/public/hua/css/master.css" rel="stylesheet">
         <!-- <link href="{$Think.Config.WEBSERVER}/public/hua/css/bootstrap.min.css" rel="stylesheet"> -->
-
         <!-- SWITCHER -->
         <link rel="stylesheet" id="switcher-css" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/switcher.css" media="all" />
         <link rel="alternate stylesheet" type="text/css" href="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/css/color1.css" title="color1" media="all" />
@@ -87,19 +86,20 @@
                         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6">
                             <a href="." class="logo"></a>
                         </div>
-
+  {if condition="$Think.Session.login_uid neq ''"}
                         <div class="col-lg-2 col-md-2 col-sm-3 col-xs-6 cart-block-r">
                             <div class="cart-block pull-right">
-                                <i class="flaticon-shopping-bag1"></i>
-                                <!-- <div class="cart-box">
+                                <a href="{:url('index/index/mycart')}"><i class="flaticon-shopping-bag1"></i></a>
+                                <div class="cart-box">
                                     <div class="cart-price pull-right">
                                         <span class="color-primary text-uppercase">购物车:</span>
-                                        <span class="price">￥1000.00</span>
-                                        <div class="items-cart">1 ITEMS</div>
+                                        <span class="price">{$cart_total}</span>
+                                        <div class="items-cart">{$cart_item} ITEMS</div>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
+                        {/if}
 
                         <div class="col-lg-8 col-md-8 col-sm-7 col-xs-12 nav-box">
                             <span id="toggle-nav" class="ef icon_menu mobile-menu-toggle"></span>
@@ -461,6 +461,25 @@
 
 
 
+<div class="modal fade" tabindex="-1" role="dialog" id="pay">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">扫一扫，支付</h4>
+      </div>
+      <div class="modal-body">
+
+          <h2>此订单需支付 <span id="orderpay"></span></h2>
+          <img src="{$Think.Config.WEBSERVER}/public/hua/img/pay.png" alt="">
+
+      </div>
+
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
 
         <script src="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/js/bootstrap-select.js"></script>
         <script src="{$Think.Config.WEBSERVER}/public/hua/plugins/switcher/js/evol.colorpicker.min.js" type="text/javascript"></script>
@@ -637,7 +656,7 @@
 
 
                             // console.log(con);
-                          
+
                             }else{
 
                               con='没有相关结果';
@@ -653,7 +672,7 @@
                 function addcart(pid){
                     $.post("{:url('index/index/addcart')}",{'pid':pid},function(ret){
                             if(ret.code===1){
-                                alert(data.msg);
+                                alert(ret.msg);
                             }else{
                                 alert("error occured");
                             }

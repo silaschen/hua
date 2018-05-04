@@ -101,15 +101,14 @@ class Fetch
 
 
 				if(!empty($order_data)){
-
-
+					
 					foreach ($order_data as $key => $value) {
 
 								if($value['data']){
 
 											foreach ($value['data'] as $k => $v) {
 														$flowerid = $order_data[$key]['data'][$k]['pid'];
-														$flower = Db::name('flower')->where(['id'=>$flowerid])->select();
+														$flower = Db::name('flower')->where(['id'=>$flowerid])->find();
 														$order_data[$key]['data'][$k]['flower'] = $flower;
 											}
 

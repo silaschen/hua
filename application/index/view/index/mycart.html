@@ -9,18 +9,18 @@
       {foreach name='cart' item='vo'}
 
           <div class="col-md-12" style="margin-bottom: 10px;">
-            <div class="col-md-3"><img class="img-responsive" src="{$Think.config.SERVER}/{$vo['cover']}"></div>
+            <div class="col-md-3"><img class="img-responsive" style="width:200px;" src="{$Think.config.SERVER}/{$vo['cover']}"></div>
             <div class="col-md-6">
               <h3>{$vo['name']}<span style="color: red;font-size: 15px;">{$vo['price']}</span></h3>
               <p>数量:<input class="form-control num" data-pid="{$vo['pid']}" data-id="{$vo['id']}" data-price="{$vo['price']}"  value="{$vo['num']}"/></p>
             </div>
-          </div>
+          </div><hr>
 
   {/foreach}
 
 </div>
 </div>
-<p style="font-size20px;" class="bg-success">总价:<span id="total">100</span> <span class="pull-right btn btn-suuccess" onclick="payFor()">付款</span></p>
+<button style="font-size20px;height:100px;position:fixed;bottom:0px;z-index:999;" class="btn btn-success btn-block" onclick="payFor()">付款(￥<span id="total">{$total}</span>)</div>
 
 <script type="text/javascript">
 
@@ -49,7 +49,6 @@
         if(ret.code===1){
           $("#total").html(ret.total);
         }
-
     }
   });
 
@@ -74,6 +73,9 @@ $.ajax({
   success:function(ret){
       if(ret.code===1){
 
+          alert('下单成功，请支付');
+          $("#orderpay").html(ret.fee);
+          $("#pay").modal();
 
       }
   }

@@ -45,6 +45,7 @@
 														{if condition="$vo['type'] eq 1"}
 						<a class="add-to-cart pull-left" href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>2))}"><span>申请代养</span></a>{/if}
 														<a href="{:url('index/index/buy',array('id'=>$vo['id'],'type'=>1))}" class="add-to-cart pull-right"><span>买买买</span></a>
+													<a class="add-to-cart pull-right" href="javascript:addcart({$vo['id']})"><span>加入购物车</span></a>
 													</div>
 													<div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
 														<div class="price">￥{$vo['price']}</div>
@@ -119,9 +120,9 @@
 											</ul>
 										</div>
 
-						
-								
-									
+
+
+
 									</div>
 								</div>
 							</div>

@@ -7,12 +7,15 @@ use app\index\controller\Common;
 use app\index\Data\Fetch;
 class Index extends Common
 {
+
+
 	/**
 	*主页
 	*主要是去数据库请求各个模块数据
 	*Db::query()  数据库查询sql执行
 	*/
     public function index(){
+      $this->Getcart();
     	//查询4个花卉，4个蔬菜，并随机排序，用于主页面展示
       list($data,$blog) = Fetch::indexdata();
       $this->assign('flower',$data);
@@ -25,6 +28,7 @@ class Index extends Common
      *可根据左侧筛选条件筛选
      */
     public function store(){
+          $this->Getcart();
       //select flower cae=1 and type=1
       $type = input('type');
       $cate = input('cate');
@@ -45,6 +49,7 @@ class Index extends Common
     }
 
     public function about(){
+          $this->Getcart();
         return $this->fetch('about');
     }
 
@@ -57,6 +62,7 @@ class Index extends Common
     }
 
 	public function register(){
+        $this->Getcart();
     if(\think\Request::instance()->isGet()){
       return $this->fetch('register');
     }else{
@@ -110,6 +116,7 @@ class Index extends Common
 	}
 
 	public function buy(){
+        $this->Getcart();
 		$id = input('id');
     $type = input('type');
 		$item = Db::query("select * from flower where id=$id");
@@ -133,10 +140,12 @@ class Index extends Common
 	}
 
   public function myorder(){
+        $this->Getcart();
     $page = input('p')?input('p'):1;
     list($order,$maxpage,$page) = Fetch::PageOrder($page);
     self::ParseOrder($order);
     $this->assign(array('page'=>$page,'maxpage'=>$maxpage,'orders'=>$order));
+    // var_dump($order);
     return $this->fetch('myorder',$order);
   }
 
@@ -152,6 +161,7 @@ class Index extends Common
 
 
   public function myorder2(){
+        $this->Getcart();
     $page = input('p')?input('p'):1;
     list($order,$maxpage,$page) = Fetch::PageOrder2($page);
     $this->assign('orders',$order);
@@ -160,6 +170,7 @@ class Index extends Common
   }
 
   public function flowerstat(){
+        $this->Getcart();
     $id = input('id');
     $detail = Db::query('select * from orders2 where id=$id')[0];
     $albums = json_decode($detail['album'],true);
@@ -167,6 +178,7 @@ class Index extends Common
   }
 
   public function pay(){
+        $this->Getcart();
     $id = input('id');
     $this->assign('id',$id);
     return $this->fetch('pay');
@@ -181,6 +193,7 @@ class Index extends Common
 	}
 
 	public function readblog(){
+        $this->Getcart();
 		$id = input('id');
 		$blog = Db::name('blog')->where(array('id'=>$id))->find();
 		$this->assign('blog',$blog);
@@ -192,6 +205,7 @@ class Index extends Common
 
   //News
   public function news(){
+        $this->Getcart();
     $all = Db::name('blog')->order('id desc')->paginate(5);
     $this->assign('all',$all);
     //suggest products
@@ -218,11 +232,13 @@ class Index extends Common
   }
 
   public function myask(){
+        $this->Getcart();
     $question = Db::query(sprintf("SELECT * from questions WHERE uid=%d",\think\Session::get('login_uid')));
     return $this->fetch('myask',['ques'=>$question]);
   }
 
   public function stat(){
+        $this->Getcart();
     $id = input('id');
     $detail = Db::query(sprintf("select stat,id,expire from orders2 where id=%d",$id))[0];
     $info = json_decode($detail['stat'],true);
@@ -254,12 +270,14 @@ class Index extends Common
   }
 
   public function myadd(){
+        $this->Getcart();
     $all = Db::query(sprintf("select * from user_address where uid=%d",\think\Session::get('login_uid')));
     $this->assign('all',$all);
     return $this->fetch('myadd');
   }
 
   public function addcart(){
+        $this->Getcart();
     $this->LoginStstus();
     $pid = input('pid');
     $flower = Db::query("select * from flower where id={$pid}")[0];
@@ -278,12 +296,15 @@ class Index extends Common
   }
 
   public function mycart(){
+        $this->Getcart();
     $cart = Db::name('cart')->alias('c')
     ->join("flower f",'c.pid=f.id','LEFT')
     ->where(['c.uid'=>\think\Session::get('login_uid')])
     ->field("c.uid,c.id,c.num,c.price,c.total,c.pid,c.addtime,f.cover,f.name")
     ->select();
+    $total = Db::query(sprintf("select sum(total) as total from cart where uid=%d",\think\Session::get('login_uid')))[0]['total'];
     $this->assign('cart',$cart);
+    $this->assign('total',$total);
     return $this->fetch('mycart');
   }
 
@@ -317,6 +338,7 @@ class Index extends Common
     $order = array(
       'uid'=>\think\Session::get('login_uid'),
       'addtime'=>time(),
+      'orderid'=>md5(time().rand(0,9999)),
       'data'=>json_encode($insert),
       'total'=>$money
     );
@@ -325,13 +347,22 @@ class Index extends Common
     if($ret){
         //删除购物车
         // Db::name('cart')->where(['uid'=>$order['uid']])->delete();
-        exit(json_encode(['code'=>1,'msg'=>'下单成功，请支付']));
-
+        exit(json_encode(['code'=>1,'msg'=>'下单成功，请支付','fee'=>$order['total']]));
 
     }else{
       exit(json_encode(['code'=>0]));
 
     }
+  }
+
+
+
+  private  function Getcart(){
+
+      $item = Db::query(sprintf("select sum(num) as num from cart where uid=%d",\think\Session::get('login_uid')))[0]['num'];
+      $total = Db::query(sprintf("select sum(total) as total from cart where uid=%d",\think\Session::get('login_uid')))[0]['total'];
+      $this->assign(array('cart_item'=>$item,'cart_total'=>$total));
+
   }
 
 }
