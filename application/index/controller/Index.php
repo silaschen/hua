@@ -326,13 +326,12 @@ class Index extends Common
   }
 
   public function DoOrder(){
-    $money = $this->checktotal(true);
     $data = json_decode(file_get_contents("php://input"),true);
     $insert = [];
-    // var_dump($data);die;
-    for ($i=0; $i < count($data); $i++) {
-
-          array_push($insert,array('pid'=>$data[$i]['pid'],'num'=>$data[$i]['num'],'price'=>$data[$i]['price']));
+    $money = 0;
+    for ($i=0; $i < count($data['data']); $i++) {
+          $money += intval($data['data'][$i]['num'])*intval($data['data'][$i]['price']);
+          array_push($insert,array('pid'=>$data['data'][$i]['pid'],'num'=>$data['data'][$i]['num'],'price'=>$data['data'][$i]['price']));
     }
 
     $order = array(
@@ -340,7 +339,11 @@ class Index extends Common
       'addtime'=>time(),
       'orderid'=>md5(time().rand(0,9999)),
       'data'=>json_encode($insert),
-      'total'=>$money
+      'total'=>$money,
+      'status'=>2,
+      'recieve'=>$data['recieve'],
+      'phone'=>$data['phone'],
+      'address'=>$data['address'],
     );
 
     $ret = Db::name('cart_order')->insert($order);
