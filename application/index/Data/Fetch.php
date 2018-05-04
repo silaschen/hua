@@ -87,7 +87,7 @@ class Fetch
 		->select();
 		$orders2 = Db::name('cart_order')->where(['uid'=>\think\Session::get('login_uid')])->select();
 		$order = array_merge($order1,$orders2 ? $orders2 :array());
-		$order_data  = self::arrangedata($order,'addtime');
+		$order_data  = self::arrangedata($order,'addtime') ? self::arrangedata($order,'addtime'):array();
 		self::DealFormat($order_data);
 		$maxcount = count($order_data);
 		$maxpage = ceil($maxcount/\think\Config::get('PAGE_SIZE'));
@@ -101,7 +101,7 @@ class Fetch
 
 
 				if(!empty($order_data)){
-					
+
 					foreach ($order_data as $key => $value) {
 
 								if($value['data']){
